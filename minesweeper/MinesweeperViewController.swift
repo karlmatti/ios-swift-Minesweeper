@@ -33,9 +33,13 @@ class MinesweeperViewController: UIViewController {
     }
     func ereaseUI() {
         //  print("erease ui\(gameBoard.arrangedSubviews.count)")
-        for _ in 1...gameBoard.arrangedSubviews.count {
-            rowDelete()
+        let countSubviews = gameBoard.arrangedSubviews.count
+        if countSubviews > 0 {
+            for _ in 1...countSubviews {
+                rowDelete()
+            }
         }
+        
         
     }
     
@@ -159,6 +163,8 @@ class MinesweeperViewController: UIViewController {
         updateTraitCollectionUI()
     }
     
+    
+    
     func updateTraitCollectionUI(){
         var traitText = ""
         switch traitCollection.horizontalSizeClass {
@@ -213,7 +219,7 @@ class MinesweeperViewController: UIViewController {
             drawUI(isLandscape: false)
         case .portraitUpsideDown:
             print("portraitUpsideDown")
-            drawUI(isLandscape: true)
+            drawUI(isLandscape: false)
         case .unknown:
             print("unknown")
             drawUI(isLandscape: false)
@@ -238,6 +244,7 @@ class MinesweeperViewController: UIViewController {
     
     
     func drawUI(isLandscape: BooleanLiteralType){
+        ereaseUI()
         var numOfRows = 0
         var numOfCols = 0
         if isLandscape == true {
@@ -257,7 +264,7 @@ class MinesweeperViewController: UIViewController {
     }
     @objc func updateOrientationUI(){
         if flag == false {
-            ereaseUI()
+            
             prepareUI()
            
         }
