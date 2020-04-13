@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="landscape" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,23 +12,23 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MinesweeperViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ifd-rh-9OZ">
-                                <rect key="frame" x="32" y="76" width="350" height="754"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ifd-rh-9OZ">
+                                <rect key="frame" x="76" y="32" width="660" height="290"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="top" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xP8-NF-CO4">
-                                        <rect key="frame" x="0.0" y="0.0" width="350" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="33.333333333333336" height="290"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="012" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C30-9A-sU4">
-                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="33.333333333333336" height="91.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYO-qR-giE">
-                                                <rect key="frame" x="119.5" y="0.0" width="111" height="35"/>
+                                                <rect key="frame" x="0.0" y="99.333333333333343" width="33.333333333333336" height="91.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="🙂"/>
                                                 <connections>
@@ -36,7 +36,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9A-b3-IgD">
-                                                <rect key="frame" x="238.5" y="0.0" width="111.5" height="35"/>
+                                                <rect key="frame" x="0.0" y="198.66666666666666" width="33.333333333333336" height="91.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -45,61 +45,57 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="xP8-NF-CO4" secondAttribute="height" multiplier="10:1" id="P39-Ph-7Lh"/>
                                         </constraints>
-                                    </stackView>
-                                    <stackView hidden="YES" opaque="NO" contentMode="top" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3y0-IG-NnZ">
-                                        <rect key="frame" x="0.0" y="36" width="350" height="35"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vj-zS-POD">
-                                                <rect key="frame" x="0.0" y="0.0" width="81.5" height="35"/>
-                                                <state key="normal" title="C➕"/>
-                                                <connections>
-                                                    <action selector="columnAdd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kNb-yL-QkW"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Dq-Wg-M6Q">
-                                                <rect key="frame" x="89.5" y="0.0" width="81.5" height="35"/>
-                                                <state key="normal" title="C➖"/>
-                                                <connections>
-                                                    <action selector="columnDelete:" destination="BYZ-38-t0r" eventType="touchUpInside" id="chE-C6-M2b"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFY-PE-5c3">
-                                                <rect key="frame" x="179" y="0.0" width="81.5" height="35"/>
-                                                <state key="normal" title="R➕"/>
-                                                <connections>
-                                                    <action selector="rowAdd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AhV-7C-1ax"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8v-h6-IMO">
-                                                <rect key="frame" x="268.5" y="0.0" width="81.5" height="35"/>
-                                                <state key="normal" title="R➖"/>
-                                                <connections>
-                                                    <action selector="rowDelete:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LsR-1Y-yGj"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="3y0-IG-NnZ" secondAttribute="height" multiplier="10:1" id="rni-yS-Mc1"/>
-                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="P39-Ph-7Lh"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact-widthClass=compact" axis="vertical"/>
+                                        <variation key="heightClass=compact-widthClass=regular" axis="vertical"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="fQT-ch-LFx">
-                                        <rect key="frame" x="0.0" y="37" width="350" height="717"/>
-                                    </stackView>
-                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DNG-KL-Pcr">
-                                        <rect key="frame" x="0.0" y="754" width="350" height="0.0"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Knp-YU-B4d">
-                                                <rect key="frame" x="0.0" y="0.0" width="350" height="0.0"/>
-                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Button"/>
-                                            </button>
-                                        </subviews>
+                                        <rect key="frame" x="41.333333333333314" y="0.0" width="618.66666666666674" height="290"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="3y0-IG-NnZ" firstAttribute="width" secondItem="3y0-IG-NnZ" secondAttribute="height" multiplier="10:1" id="JK8-3Z-WBG"/>
+                                    <constraint firstAttribute="trailing" secondItem="xP8-NF-CO4" secondAttribute="trailing" id="A4i-A6-gRQ"/>
+                                    <constraint firstItem="fQT-ch-LFx" firstAttribute="leading" secondItem="ifd-rh-9OZ" secondAttribute="leading" id="ANU-Ln-Dk7"/>
+                                    <constraint firstItem="xP8-NF-CO4" firstAttribute="top" secondItem="ifd-rh-9OZ" secondAttribute="top" id="AWu-6d-Y17"/>
+                                    <constraint firstItem="fQT-ch-LFx" firstAttribute="leading" secondItem="xP8-NF-CO4" secondAttribute="trailing" id="FP3-q1-NRb"/>
+                                    <constraint firstItem="fQT-ch-LFx" firstAttribute="top" secondItem="xP8-NF-CO4" secondAttribute="bottom" id="Fex-5d-lMW"/>
+                                    <constraint firstAttribute="bottom" secondItem="fQT-ch-LFx" secondAttribute="bottom" id="dfS-Mx-BDa"/>
+                                    <constraint firstItem="fQT-ch-LFx" firstAttribute="top" secondItem="ifd-rh-9OZ" secondAttribute="top" id="hia-Vf-TZX"/>
+                                    <constraint firstItem="xP8-NF-CO4" firstAttribute="leading" secondItem="ifd-rh-9OZ" secondAttribute="leading" id="kqE-be-Mu0"/>
+                                    <constraint firstAttribute="trailing" secondItem="fQT-ch-LFx" secondAttribute="trailing" id="sGk-vv-b2F"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="A4i-A6-gRQ"/>
+                                        <exclude reference="ANU-Ln-Dk7"/>
+                                        <exclude reference="FP3-q1-NRb"/>
+                                        <exclude reference="Fex-5d-lMW"/>
+                                        <exclude reference="hia-Vf-TZX"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact" axis="horizontal">
+                                    <mask key="constraints">
+                                        <include reference="FP3-q1-NRb"/>
+                                        <include reference="hia-Vf-TZX"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular" axis="horizontal">
+                                    <mask key="constraints">
+                                        <include reference="FP3-q1-NRb"/>
+                                        <include reference="hia-Vf-TZX"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="A4i-A6-gRQ"/>
+                                        <include reference="ANU-Ln-Dk7"/>
+                                        <include reference="Fex-5d-lMW"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

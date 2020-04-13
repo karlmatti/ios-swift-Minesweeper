@@ -11,25 +11,23 @@ import UIKit
 class MinesweeperViewController: UIViewController {
 
     @IBOutlet weak var gameBoard: UIStackView!
-    @IBOutlet weak var tileX0Y0: UITileView! {
-        didSet {
-            tileX0Y0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MinesweeperViewController.handleTap(gesture:))))
-        }
-    }
     
     var buttonCounter = 0
-    var numOfRows: Int = 0
-    var numOfCols: Int = 0
-    var flag: DarwinBoolean = true
+    var flag: BooleanLiteralType = true
+    var numOfPortraitRows: Int = 0
+    var numOfPortraitCols: Int = 0
+    var numOfLandscapeRows: Int = 0
+    var numOfLandscapeCols: Int = 0
 
     @IBAction func startGame(_ sender: UIButton) {
-        if flag == true {
-            drawUI()
-            flag = false
-        } else {
-            ereaseUI()
-            flag = true
-        }
+        //  Calculate col and row numbers for portrait/landscape
+        calculateColRow()
+        
+        
+        prepareUI()
+        flag = false
+        
+          
         
 
     }
@@ -40,18 +38,7 @@ class MinesweeperViewController: UIViewController {
         }
         
     }
-    func drawUI() {
-        numOfRows = Int((gameBoard.frame.size.height / 55).rounded()) - 1
-        numOfCols = Int((gameBoard.frame.size.width / 55).rounded()) - 1
-        //  print("numOfRows\(numOfRows)")
-        //  print("numOfCols\(numOfCols)")
-        for _ in 1...numOfRows {
-            rowAdd()
-        }
-        for _ in 1...numOfCols {
-            columnAdd()
-        }
-    }
+    
     
     func rowAdd() {
         if (gameBoard.arrangedSubviews.count == 0){
@@ -89,12 +76,7 @@ class MinesweeperViewController: UIViewController {
     
     func rowDelete() {
         let subView = gameBoard.arrangedSubviews.last as! UIStackView
-        for button in subView.arrangedSubviews {
-            let uiButton = button as! UIButton
-            subView.removeArrangedSubview(uiButton)
-            uiButton.removeFromSuperview()
-       
-        }
+        
         gameBoard.removeArrangedSubview(subView)
         subView.removeFromSuperview()
  
@@ -205,36 +187,83 @@ class MinesweeperViewController: UIViewController {
         
         print("updateTraitCollectionUI \(traitText)")
     }
-    @objc func updateOrientationUI(){
-        var orientationText = "Orient: "
+    
+    
+    
+    func prepareUI() {
+        
+        
+        //  Draw UI according to current orientation
+        //  drawUI(boolean) where argument 'false' is portrait and 'true' is landscape
         switch UIDevice.current.orientation {
         case .faceUp:
-            orientationText += "faceUp"
+            print("faceUp")
+            //  drawUI(isLandscape: false)
         case .faceDown:
-            orientationText += "faceDown"
+            print("faceDown")
+            //  drawUI(isLandscape: false)
         case .landscapeLeft:
-            orientationText += "landscapeLeft"
+            print("landscapeLeft")
+            drawUI(isLandscape: true)
         case .landscapeRight:
-            orientationText += "landscapeRight"
-            let temp = numOfCols
-            numOfCols = numOfRows
-            numOfRows = temp
-            
+            print("landscapeRight")
+            drawUI(isLandscape: true)
         case .portrait:
-            orientationText += "portrait"
-            let temp = numOfCols
-            numOfCols = numOfRows
-            numOfRows = temp
-            
+            print("portrait")
+            drawUI(isLandscape: false)
         case .portraitUpsideDown:
-            orientationText += "portraitUpsideDown"
+            print("portraitUpsideDown")
+            drawUI(isLandscape: true)
         case .unknown:
-            orientationText += "unknown"
+            print("unknown")
+            drawUI(isLandscape: false)
         default:
-            orientationText += "new"
+            print("default")
+            //  drawUI(isLandscape: false)
         }
         
-        print("updateOrientationUI \(orientationText)")
+        
+    }
+    func calculateColRow(){
+        numOfPortraitRows = Int((gameBoard.frame.size.height / 55).rounded()) - 1
+        numOfPortraitCols = Int((gameBoard.frame.size.width / 55).rounded()) - 1
+        numOfLandscapeRows = numOfPortraitCols + 1
+        numOfLandscapeCols = numOfPortraitRows - 1
+        
+        print("portRows\(numOfPortraitRows)")
+        print("portCols\(numOfPortraitCols)")
+        print("landRows\(numOfLandscapeRows)")
+        print("landCols\(numOfLandscapeCols)")
+    }
+    
+    
+    func drawUI(isLandscape: BooleanLiteralType){
+        var numOfRows = 0
+        var numOfCols = 0
+        if isLandscape == true {
+            numOfRows = numOfLandscapeRows
+            numOfCols = numOfLandscapeCols
+        } else {
+            numOfRows = numOfPortraitRows
+            numOfCols = numOfPortraitCols
+        }
+        
+        for _ in 1...numOfRows {
+            rowAdd()
+        }
+        for _ in 1...numOfCols {
+            columnAdd()
+        }
+    }
+    @objc func updateOrientationUI(){
+        if flag == false {
+            ereaseUI()
+            prepareUI()
+           
+        }
+        
+        
+        
     }
 
 
