@@ -27,8 +27,8 @@ class MSweeperViewController: UIViewController {
     @IBAction func startGame(_ sender: UIButton) {
         //  Calculate col and row numbers for portrait/landscape
         calculateColRow()
-        gameEngine = MSweeperEngine(x: 10, y: 5, percentageOfBombs: 0.1)
-        
+        gameEngine = MSweeperEngine(rowCount: 10, colCount: 5, percentageOfBombs: 0.1)
+        gameEngine?.startGame()
         prepareUI()
         flag = false
         
