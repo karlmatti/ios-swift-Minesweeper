@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Minesweeper View Controller-->
+        <!--Sweeper View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MinesweeperViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MSweeperViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ifd-rh-9OZ">
-                                <rect key="frame" x="32" y="32" width="1302" height="940"/>
+                                <rect key="frame" x="32" y="76" width="350" height="754"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="top" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xP8-NF-CO4">
-                                        <rect key="frame" x="0.0" y="0.0" width="33.5" height="940"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="012" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C30-9A-sU4">
-                                                <rect key="frame" x="0.0" y="0.0" width="33.5" height="308"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYO-qR-giE">
-                                                <rect key="frame" x="0.0" y="316" width="33.5" height="308"/>
+                                                <rect key="frame" x="119.5" y="0.0" width="111" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="🙂"/>
                                                 <connections>
@@ -36,7 +36,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9A-b3-IgD">
-                                                <rect key="frame" x="0.0" y="632" width="33.5" height="308"/>
+                                                <rect key="frame" x="238.5" y="0.0" width="111.5" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                                         <variation key="heightClass=regular-widthClass=regular" axis="vertical"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="fQT-ch-LFx">
-                                        <rect key="frame" x="41.5" y="0.0" width="1260.5" height="940"/>
+                                        <rect key="frame" x="0.0" y="44" width="350" height="710"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -63,7 +63,6 @@
                                     <constraint firstItem="fQT-ch-LFx" firstAttribute="leading" secondItem="ifd-rh-9OZ" secondAttribute="leading" id="ANU-Ln-Dk7"/>
                                     <constraint firstItem="xP8-NF-CO4" firstAttribute="top" secondItem="ifd-rh-9OZ" secondAttribute="top" id="AWu-6d-Y17"/>
                                     <constraint firstItem="fQT-ch-LFx" firstAttribute="leading" secondItem="xP8-NF-CO4" secondAttribute="trailing" id="FP3-q1-NRb"/>
-                                    <constraint firstItem="fQT-ch-LFx" firstAttribute="top" secondItem="xP8-NF-CO4" secondAttribute="bottom" id="Fex-5d-lMW"/>
                                     <constraint firstAttribute="bottom" secondItem="fQT-ch-LFx" secondAttribute="bottom" id="dfS-Mx-BDa"/>
                                     <constraint firstItem="fQT-ch-LFx" firstAttribute="top" secondItem="ifd-rh-9OZ" secondAttribute="top" id="hia-Vf-TZX"/>
                                     <constraint firstItem="xP8-NF-CO4" firstAttribute="leading" secondItem="ifd-rh-9OZ" secondAttribute="leading" id="kqE-be-Mu0"/>
@@ -74,7 +73,6 @@
                                         <exclude reference="A4i-A6-gRQ"/>
                                         <exclude reference="ANU-Ln-Dk7"/>
                                         <exclude reference="FP3-q1-NRb"/>
-                                        <exclude reference="Fex-5d-lMW"/>
                                         <exclude reference="hia-Vf-TZX"/>
                                     </mask>
                                 </variation>
@@ -94,7 +92,6 @@
                                     <mask key="constraints">
                                         <include reference="A4i-A6-gRQ"/>
                                         <include reference="ANU-Ln-Dk7"/>
-                                        <include reference="Fex-5d-lMW"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" axis="horizontal"/>
@@ -110,9 +107,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="game" destination="ifd-rh-9OZ" id="pHX-6s-Bqn"/>
                         <outlet property="gameBoard" destination="fQT-ch-LFx" id="enS-7o-kfZ"/>
-                        <outlet property="gameStatistics" destination="xP8-NF-CO4" id="Ai5-7g-LW8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

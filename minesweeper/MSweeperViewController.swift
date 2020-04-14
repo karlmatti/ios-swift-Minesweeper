@@ -8,7 +8,12 @@
 
 import UIKit
 
-class MinesweeperViewController: UIViewController {
+
+class MSweeperViewController: UIViewController {
+    
+    
+    
+    
 
     @IBOutlet weak var gameBoard: UIStackView!
     
@@ -18,11 +23,11 @@ class MinesweeperViewController: UIViewController {
     var numOfPortraitCols: Int = 0
     var numOfLandscapeRows: Int = 0
     var numOfLandscapeCols: Int = 0
-
+    var gameEngine: MSweeperEngine?
     @IBAction func startGame(_ sender: UIButton) {
         //  Calculate col and row numbers for portrait/landscape
         calculateColRow()
-        
+        gameEngine = MSweeperEngine(x: 10, y: 5, percentageOfBombs: 0.1)
         
         prepareUI()
         flag = false
@@ -63,7 +68,7 @@ class MinesweeperViewController: UIViewController {
                 for _ in 0..<columnCount {
                     let button = UITileView()
                     
-                    let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MinesweeperViewController.handleTap(gesture:)))
+                    let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MSweeperViewController.handleTap(gesture:)))
                     button.addGestureRecognizer(releaseTap)
                     //  start to write color and pick "Color Literal"
                     button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -103,7 +108,7 @@ class MinesweeperViewController: UIViewController {
             if let columnStack = subView as? UIStackView {
                 let button = UITileView()
                 
-                let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MinesweeperViewController.handleTap(gesture:)))
+                let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MSweeperViewController.handleTap(gesture:)))
                 button.addGestureRecognizer(releaseTap)
                 //  start to write color and pick "Color Literal"
                 button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -156,6 +161,7 @@ class MinesweeperViewController: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateOrientationUI), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
         // Do any additional setup after loading the view.
     }
     
