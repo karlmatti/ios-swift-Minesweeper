@@ -21,23 +21,20 @@ class MSweeperEngine {
     var state: State
     /*
         gameField values are
-        0-empty clicked, 1-one bomb nearby(bn), 2-two bn, 3-three bn,
-        4-four bn, 5-five bn, 6-six bn, 7-seven bn,
-        8-eight bn, 9-bomb clicked on, 10-bomb revealed not clicked on, 11-flag
+        0-zero bombs nearby(bn), 1-one bn, 2-two bn, 3-three bn,
+        4-four bn, 5-five bn, 6-six bn, 7-seven bn, 8-eight bn,
+        9-bomb(clicked), 10-bomb(normal)
     */
     var gameField: Array<Array<Int>>
+    //  revealedGameField values are 0-not revealed tile, 1-revealed tile, 2-flag
+    var revealedGameField: Array<Array<Int>>
     
     //  initializing gameField
     init(rowCount: Int, colCount : Int, percentageOfBombs: Double) {
         self.numberOfBombs = Int(Double(rowCount * colCount) * percentageOfBombs)
         self.state = .play
         self.gameField = Array(repeating: Array(repeating: 0, count: colCount), count: rowCount)
-        
-        /*for row in self.gameField {
-            for col in row {
-                print("colVal: \(col)")
-            }
-        }*/
+        self.revealedGameField = Array(repeating: Array(repeating: 0, count: colCount), count: rowCount)
         
     }
     func startGame() {
@@ -50,6 +47,38 @@ class MSweeperEngine {
             print("rowVal: \(row)")
             
         }
+        
+    }
+    
+    func handleSelection(row: Int, col: Int, flag: DarwinBoolean) {
+        if self.revealedGameField[row][col] == 0{
+            if flag == true {
+                self.revealedGameField[row][col] = 2
+            } else {
+                switch self.gameField[row][col] {
+                case 0:
+                    self.revealedGameField[row][col] = 1
+                    //  recursion
+                case 1...8:
+                    self.revealedGameField[row][col] = 1
+                case 10:
+                    self.revealedGameField[row][col] = 1
+                    self.gameField[row][col] = 9
+                default:
+                    <#code#>
+                }
+            }
+        } else if self.revealedGameField[row][col] == 2{
+            self.revealedGameField[row][col] = 0
+        }
+        
+        
+        /*
+        for row in 0..<self.gameField.count{
+            for col in 0..<self.gameField[0].count {
+                
+            }
+        }*/
         
     }
    
@@ -108,12 +137,11 @@ class MSweeperEngine {
         var gameFieldUpdatedNbrs = gameFieldBombsNumbers
         let maxRow = gameFieldBombsNumbers.count - 1
         let maxCol = gameFieldBombsNumbers[0].count - 1
-        print("ubn row\(row)")
-        print("ubn col\(col)")
+
         if row == 0 && col == 0 {  // corner
             gameFieldUpdatedNbrs[row + 1][col] += 1
             gameFieldUpdatedNbrs[row][col + 1] += 1
-            
+            gameFieldUpdatedNbrs[row + 1][col + 1] += 1
         } else if row == maxRow && col == maxCol {  // corner
             gameFieldUpdatedNbrs[row - 1][col] += 1
             gameFieldUpdatedNbrs[row][col - 1] += 1
