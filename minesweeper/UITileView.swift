@@ -41,7 +41,9 @@ class UITileView: UIView{
     private var viewMidPoint: CGPoint {return CGPoint(x: bounds.midX, y:bounds.midY)}
     private var circleRadius: CGFloat {return min(bounds.width, bounds.height) / 2 * 0.8}
     private var count = 0
-    
+    func setCount(count: Int){
+        self.count = count
+    }
     override func draw(_ rect: CGRect) {
         
         let context=UIGraphicsGetCurrentContext()!

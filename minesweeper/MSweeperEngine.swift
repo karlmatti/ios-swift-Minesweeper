@@ -9,16 +9,11 @@
 import Foundation
 
 class MSweeperEngine {
-    //  State to check whether the game is currently played, won or lost. States: play, win, lose
-    enum State {
-        case play
-        case win
-        case lose
-    }
+    
     
     //  numberOfBombs calculated from percentageOfBombs given in 0.00 to 1.00 format where for example 0.50 is 50 %
     var numberOfBombs: Int
-    var state: State
+    var state: State = .play
     /*
         gameField values are
         0-zero bombs nearby(bn), 1-one bn, 2-two bn, 3-three bn,
@@ -37,7 +32,19 @@ class MSweeperEngine {
         self.revealedGameField = Array(repeating: Array(repeating: 0, count: colCount), count: rowCount)
         
     }
-    func startGame(){
+    func getState() -> (Array<Array<Int>>, Array<Array<Int>>, State) {
+        print("getstate() -> revealedGameField")
+        for row in self.revealedGameField {
+            print("\(row)")
+        }
+        print("getstate() -> gameField")
+        for row in self.gameField {
+            print("\(row)")
+        }
+    
+        return (self.gameField, self.revealedGameField, self.state)
+    }
+    func startGame() -> (Array<Array<Int>>, Array<Array<Int>>){
         
             
         self.gameField = generateGameField(gameFieldEmpty: self.gameField, numberOfBombs: self.numberOfBombs)
@@ -58,7 +65,7 @@ class MSweeperEngine {
         for row in self.revealedGameField {
             print("\(row)")
         }*/
-        
+        return (self.gameField, self.revealedGameField)
     }
     
     func handleSelection(row: Int, col: Int, flag: DarwinBoolean) {
@@ -75,9 +82,10 @@ class MSweeperEngine {
                     case 1...8:
                         self.revealedGameField[row][col] = 1
                     case 10:
-                        self.revealedGameField[row][col] = 1
+                        
                         self.gameField[row][col] = 9
                         self.state = .lose
+                        self.revealedGameField = Array(repeating: Array(repeating: 1, count: self.gameField[0].count), count: self.gameField.count)
                     default:
                         print("Gamefield does not have correct value at [\(row)][\(col)] which is \(self.gameField[row][col])")
                     }
@@ -89,14 +97,16 @@ class MSweeperEngine {
         }
         
         
-        
         /*
-        for row in 0..<self.gameField.count{
-            for col in 0..<self.gameField[0].count {
-                
-            }
-        }*/
-        
+        print("gameField")
+        for row in self.gameField {
+            print("\(row)")
+        }
+        print("revealedGameField")
+        for row in self.revealedGameField {
+            print("\(row)")
+        }
+        */
     }
     
     func revealNeighbours(row: Int, col: Int) {
@@ -150,7 +160,7 @@ class MSweeperEngine {
             handleSelection(row: row,     col: col - 1, flag: false)
             handleSelection(row: row + 1, col: col - 1, flag: false)
             handleSelection(row: row - 1, col: col - 1, flag: false)
-            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row + 1, col: col + 1, flag: false)
             handleSelection(row: row - 1, col: col + 1, flag: false)
         }
         
