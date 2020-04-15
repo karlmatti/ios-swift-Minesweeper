@@ -37,40 +37,57 @@ class MSweeperEngine {
         self.revealedGameField = Array(repeating: Array(repeating: 0, count: colCount), count: rowCount)
         
     }
-    func startGame() {
+    func startGame(){
         
             
         self.gameField = generateGameField(gameFieldEmpty: self.gameField, numberOfBombs: self.numberOfBombs)
-        
+        /*
+        print("Initial gameField:")
         for row in self.gameField {
-            
-            print("rowVal: \(row)")
-            
+            print("\(row)")
         }
+        print("Selecting 2,2")
+        //handleSelection(row: 1, col: 1, flag: false)
+        handleSelection(row: 2, col: 2, flag: false)
+        //handleSelection(row: 3, col: 3, flag: false)
+        print("gameField")
+        for row in self.gameField {
+            print("\(row)")
+        }
+        print("revealedGameField")
+        for row in self.revealedGameField {
+            print("\(row)")
+        }*/
         
     }
     
     func handleSelection(row: Int, col: Int, flag: DarwinBoolean) {
-        if self.revealedGameField[row][col] == 0{
-            if flag == true {
-                self.revealedGameField[row][col] = 2
-            } else {
-                switch self.gameField[row][col] {
-                case 0:
-                    self.revealedGameField[row][col] = 1
-                    //  recursion
-                case 1...8:
-                    self.revealedGameField[row][col] = 1
-                case 10:
-                    self.revealedGameField[row][col] = 1
-                    self.gameField[row][col] = 9
-                default:
-                    <#code#>
+        if self.state == .play {
+            
+            if self.revealedGameField[row][col] == 0{
+                if flag == true {
+                    self.revealedGameField[row][col] = 2
+                } else {
+                    switch self.gameField[row][col] {
+                    case 0:
+                        self.revealedGameField[row][col] = 1
+                        revealNeighbours(row: row, col: col)
+                    case 1...8:
+                        self.revealedGameField[row][col] = 1
+                    case 10:
+                        self.revealedGameField[row][col] = 1
+                        self.gameField[row][col] = 9
+                        self.state = .lose
+                    default:
+                        print("Gamefield does not have correct value at [\(row)][\(col)] which is \(self.gameField[row][col])")
+                    }
                 }
+            } else if self.revealedGameField[row][col] == 2 && flag == true{
+                self.revealedGameField[row][col] = 0
             }
-        } else if self.revealedGameField[row][col] == 2{
-            self.revealedGameField[row][col] = 0
+            
         }
+        
         
         
         /*
@@ -81,6 +98,65 @@ class MSweeperEngine {
         }*/
         
     }
+    
+    func revealNeighbours(row: Int, col: Int) {
+        
+        let maxRow = self.gameField.count - 1
+        let maxCol = self.gameField[0].count - 1
+        if row == 0 && col == 0 {  // corner
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row, col: col + 1, flag: false)
+            handleSelection(row: row + 1, col: col + 1, flag: false)
+        } else if row == maxRow && col == maxCol {  // corner
+            handleSelection(row: row - 1, col: col, flag: false)
+            handleSelection(row: row, col: col - 1, flag: false)
+            handleSelection(row: row - 1, col: col - 1, flag: false)
+        } else if row == 0 && col == maxCol {  // corner
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row, col: col - 1, flag: false)
+            handleSelection(row: row, col: col, flag: false)
+        } else if row == maxRow && col == 0 {  // corner
+            handleSelection(row: row - 1, col: col, flag: false)
+            handleSelection(row: row, col: col + 1, flag: false)
+            handleSelection(row: row - 1, col: col + 1, flag: false)
+        } else if row == 0 {  //  side
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row, col: col - 1, flag: false)
+            handleSelection(row: row, col: col + 1, flag: false)
+            handleSelection(row: row + 1, col: col - 1, flag: false)
+            handleSelection(row: row + 1, col: col + 1, flag: false)
+        } else if col == 0 {  //  side
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row, col: col + 1, flag: false)
+            handleSelection(row: row - 1, col: col, flag: false)
+            handleSelection(row: row + 1, col: col + 1, flag: false)
+            handleSelection(row: row - 1, col: col + 1, flag: false)
+        } else if row == maxRow {  //  side
+            handleSelection(row: row - 1, col: col, flag: false)
+            handleSelection(row: row, col: col - 1, flag: false)
+            handleSelection(row: row, col: col + 1, flag: false)
+            handleSelection(row: row - 1, col: col - 1, flag: false)
+            handleSelection(row: row - 1, col: col + 1, flag: false)
+        } else if col == maxCol {  //  side
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row, col: col - 1, flag: false)
+            handleSelection(row: row - 1, col: col, flag: false)
+            handleSelection(row: row + 1, col: col - 1, flag: false)
+            handleSelection(row: row - 1, col: col - 1, flag: false)
+        } else {  // other
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row,     col: col + 1, flag: false)
+            handleSelection(row: row - 1, col: col + 1, flag: false)
+            handleSelection(row: row,     col: col - 1, flag: false)
+            handleSelection(row: row + 1, col: col - 1, flag: false)
+            handleSelection(row: row - 1, col: col - 1, flag: false)
+            handleSelection(row: row + 1, col: col, flag: false)
+            handleSelection(row: row - 1, col: col + 1, flag: false)
+        }
+        
+    }
+    
+    
    
     func generateGameField(gameFieldEmpty: Array<Array<Int>>,numberOfBombs: Int) -> Array<Array<Int>>{
 
