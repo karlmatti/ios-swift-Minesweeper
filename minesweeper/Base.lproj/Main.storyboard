@@ -35,7 +35,7 @@
                                                     <action selector="startGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wu4-ey-aKq"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9A-b3-IgD">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9A-b3-IgD">
                                                 <rect key="frame" x="238.5" y="0.0" width="111.5" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
@@ -108,6 +108,9 @@
                     </view>
                     <connections>
                         <outlet property="gameBoard" destination="fQT-ch-LFx" id="enS-7o-kfZ"/>
+                        <outlet property="gameBombsLeft" destination="C30-9A-sU4" id="kH9-v7-T8T"/>
+                        <outlet property="gameStatus" destination="wYO-qR-giE" id="6AO-LY-hqU"/>
+                        <outlet property="gameTimer" destination="z9A-b3-IgD" id="6xQ-5b-GkU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

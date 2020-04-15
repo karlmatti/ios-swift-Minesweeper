@@ -24,6 +24,8 @@ class MSweeperEngine {
     //  revealedGameField values are 0-not revealed tile, 1-revealed tile, 2-flag
     var revealedGameField: Array<Array<Int>>
     
+    var flagCount: Int = 0
+    
     //  initializing gameField
     init(rowCount: Int, colCount : Int, percentageOfBombs: Double) {
         self.numberOfBombs = Int(Double(rowCount * colCount) * percentageOfBombs)
@@ -32,7 +34,7 @@ class MSweeperEngine {
         self.revealedGameField = Array(repeating: Array(repeating: 0, count: colCount), count: rowCount)
         
     }
-    func getState() -> (Array<Array<Int>>, Array<Array<Int>>, State) {
+    func getState() -> (Array<Array<Int>>, Array<Array<Int>>, State, Int) {
         print("getstate() -> revealedGameField")
         for row in self.revealedGameField {
             print("\(row)")
@@ -41,13 +43,14 @@ class MSweeperEngine {
         for row in self.gameField {
             print("\(row)")
         }
-    
-        return (self.gameField, self.revealedGameField, self.state)
+        let bombsLeft = self.numberOfBombs - self.flagCount
+        return (self.gameField, self.revealedGameField, self.state, bombsLeft)
     }
-    func startGame() -> (Array<Array<Int>>, Array<Array<Int>>){
+    func startGame() -> (Array<Array<Int>>, Array<Array<Int>>, Int){
         
             
         self.gameField = generateGameField(gameFieldEmpty: self.gameField, numberOfBombs: self.numberOfBombs)
+        self.flagCount = 0
         /*
         print("Initial gameField:")
         for row in self.gameField {
@@ -65,7 +68,7 @@ class MSweeperEngine {
         for row in self.revealedGameField {
             print("\(row)")
         }*/
-        return (self.gameField, self.revealedGameField)
+        return (self.gameField, self.revealedGameField, self.numberOfBombs - self.flagCount)
     }
     
     func handleSelection(row: Int, col: Int, flag: DarwinBoolean) {
@@ -73,7 +76,9 @@ class MSweeperEngine {
             
             if self.revealedGameField[row][col] == 0{
                 if flag == true {
+                    print("self.revealedGameField[row][col] == 0 && flag == true")
                     self.revealedGameField[row][col] = 2
+                    self.flagCount += 1
                 } else {
                     switch self.gameField[row][col] {
                     case 0:
@@ -91,6 +96,7 @@ class MSweeperEngine {
                     }
                 }
             } else if self.revealedGameField[row][col] == 2 && flag == true{
+                self.flagCount -= 1
                 self.revealedGameField[row][col] = 0
             }
             

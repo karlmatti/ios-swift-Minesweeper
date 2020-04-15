@@ -16,6 +16,9 @@ class MSweeperViewController: UIViewController {
     
 
     @IBOutlet weak var gameBoard: UIStackView!
+    @IBOutlet weak var gameStatus: UIButton!
+    @IBOutlet weak var gameBombsLeft: UILabel!
+    @IBOutlet weak var gameTimer: UILabel!
     
     var buttonCounter = 0
     var flag: BooleanLiteralType = true
@@ -29,15 +32,25 @@ class MSweeperViewController: UIViewController {
     var revealedGameField: Array<Array<Int>> = []
     var gameField: Array<Array<Int>> = []
     var gameState: State = .play
+    var gameBombsCount: Int = 0
+
     @IBAction func startGame(_ sender: UIButton) {
         //  Calculate col and row numbers for portrait/landscape
+        
+        //  TODO: Add l1, l2, l3
+        //  TODO: Fix UI
+        //  TODO: Improve UI
+        //  TODO: calculate win state
         calculateColRow()
         gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: 0.1)
-        (gameField, revealedGameField) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>)
+        (gameField, revealedGameField, gameBombsCount) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>, Int)
         prepareUI()
         flag = false
-        
-        
+        gameStatus.setTitle("🙂", for: UIControl.State.normal)
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.gameTimer.text = String((self.gameTimer.text! as NSString).integerValue + 1)
+        }
+        self.gameBombsLeft.text = String(self.gameBombsCount)
 
     }
     func ereaseUI() {
@@ -119,7 +132,13 @@ class MSweeperViewController: UIViewController {
                 self.buttonTag += 1
                 
                 let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MSweeperViewController.handleTap(gesture:)))
+                releaseTap.numberOfTapsRequired = 1
+                let releaseDoubleTap = UITapGestureRecognizer(target: self, action: #selector(MSweeperViewController.handleDoubleTap(gesture:)))
+                releaseDoubleTap.numberOfTapsRequired = 2
+                
                 button.addGestureRecognizer(releaseTap)
+                button.addGestureRecognizer(releaseDoubleTap)
+                releaseTap.require(toFail: releaseDoubleTap)
                 //  start to write color and pick "Color Literal"
                 button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
                 button.showElement = 0
@@ -136,10 +155,26 @@ class MSweeperViewController: UIViewController {
     }
     
     
+    @objc func handleDoubleTap(gesture: UITapGestureRecognizer) {
+        switch gesture.state {
+            
+            case .ended:
+                
+                if let view = gesture.view as? UITileView {
+                    let (selectedRow, selectedCol) = findClickedTile(buttonTag: view.tag)
+                    gameEngine?.handleSelection(row: selectedRow, col: selectedCol, flag: true)
     
+                }
+            default:
+                break
+        }
+        (self.gameField, self.revealedGameField, self.gameState, self.gameBombsCount) = gameEngine?.getState() as! (Array<Array<Int>>, Array<Array<Int>>, State, Int)
+        drawElements()
+    }
     @objc func handleTap(gesture: UITapGestureRecognizer){
         
         switch gesture.state {
+            
             case .ended:
                 //print("tap received")
                 
@@ -170,7 +205,7 @@ class MSweeperViewController: UIViewController {
             default:
                 break
         }
-        (self.gameField, self.revealedGameField, self.gameState) = gameEngine?.getState() as! (Array<Array<Int>>, Array<Array<Int>>, State)
+        (self.gameField, self.revealedGameField, self.gameState, self.gameBombsCount) = gameEngine?.getState() as! (Array<Array<Int>>, Array<Array<Int>>, State, Int)
         drawElements()
     }
 
@@ -337,6 +372,8 @@ class MSweeperViewController: UIViewController {
     
                             } else if self.revealedGameField[col][row] == 2 {
                                 square.showElement = 1
+                            } else if self.revealedGameField[col][row] == 0 {
+                                square.showElement = 0
                             }
                         }
                         
@@ -348,6 +385,12 @@ class MSweeperViewController: UIViewController {
             }
             
         }
+        if self.gameState == .lose {
+            gameStatus.setTitle("🤯", for: UIControl.State.normal)
+        } else if self.gameState == .win {
+            gameStatus.setTitle("🥳", for: UIControl.State.normal)
+        }
+        gameBombsLeft.text = String(self.gameBombsCount)
     }
     @objc func updateOrientationUI(){
         if flag == false {
