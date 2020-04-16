@@ -14,6 +14,7 @@ class MSweeperViewController: UIViewController {
     
     
 
+    @IBOutlet weak var UIView: UIView!
     @IBOutlet weak var gameBoard: UIStackView!
     @IBOutlet weak var gameStatus: UIButton!
     @IBOutlet weak var gameBombsLeft: UILabel!
@@ -66,20 +67,23 @@ class MSweeperViewController: UIViewController {
         //  TODO: Improve UI
         //  TODO: save state when changing orientation
         
-        //  Calculate col and row numbers for portrait/landscape
-        calculateColRow()
-        gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: self.gameLevel)
-        (gameField, revealedGameField, gameBombsCount) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>, Int)
-        prepareUI()
-        flag = false
-        gameStatus.setTitle("🙂", for: UIControl.State.normal)
-        self.gameTimer.text = "0"
-        timer.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            
-            self.gameTimer.text = String((self.gameTimer.text! as NSString).integerValue + 1)
+        if UIDevice.current.orientation.isValidInterfaceOrientation {
+            //  Calculate col and row numbers for portrait/landscape
+            calculateColRow()
+            gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: self.gameLevel)
+            (gameField, revealedGameField, gameBombsCount) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>, Int)
+            prepareUI()
+            flag = false
+            gameStatus.setTitle("🙂", for: UIControl.State.normal)
+            self.gameTimer.text = "0"
+            timer.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                
+                self.gameTimer.text = String((self.gameTimer.text! as NSString).integerValue + 1)
+            }
+            self.gameBombsLeft.text = String(self.gameBombsCount)
         }
-        self.gameBombsLeft.text = String(self.gameBombsCount)
+        
 
     }
     func ereaseUI() {
@@ -242,7 +246,11 @@ class MSweeperViewController: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateOrientationUI), name: UIDevice.orientationDidChangeNotification, object: nil)
-        
+        print("UIView.frame.size \(UIView.frame.size)")
+        let height: Int = Int(Double(UIView.frame.size.height) * 0.8)
+        let width: Int = Int(Double(UIView.frame.size.width) * 0.8)
+        print("UIView.frame.size.height \(height)")
+        print("UIView.frame.size.width \(width)")
         // Do any additional setup after loading the view.
     }
     
@@ -311,6 +319,8 @@ class MSweeperViewController: UIViewController {
     
     func prepareUI() {
         
+        //  TODO: React for Regular Regular trait -> change axis for some stackviews
+        
         //  Draw UI according to current orientation
         //  drawUI(boolean) where argument 'false' is portrait and 'true' is landscape
         if UIDevice.current.orientation.isLandscape {
@@ -333,16 +343,45 @@ class MSweeperViewController: UIViewController {
     }
     
     func calculateColRow(){
-        numOfPortraitRows = Int((gameBoard.frame.size.height / 55).rounded()) - 1
-        numOfPortraitCols = Int((gameBoard.frame.size.width / 55).rounded()) - 1
-        numOfLandscapeRows = numOfPortraitCols + 1
-        numOfLandscapeCols = numOfPortraitRows - 1
+        print("UIView.frame.size\(UIView.frame.size)")
+        print("gameBoard.frame.size\(gameBoard.frame.size)")
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+        if UIDevice.current.orientation.isLandscape == true {
+            
+            height = UIView.frame.size.height * 0.9
+            width = UIView.frame.size.width * 0.9 * 0.9
+            
+            numOfPortraitCols = Int((height / 40).rounded())
+            numOfPortraitRows = Int((width / 40).rounded())
+            
+            numOfLandscapeCols = numOfPortraitRows - 1
+            numOfLandscapeRows = numOfPortraitCols + 1
+            
+        } else {
+            
+            height = UIView.frame.size.width * 0.9
+            width = UIView.frame.size.height * 0.9 * 0.9
+            
+            
+            numOfPortraitCols = Int((height / 40).rounded())
+            numOfPortraitRows = Int((width / 40).rounded())
+            
+            numOfLandscapeCols = numOfPortraitRows - 1
+            numOfLandscapeRows = numOfPortraitCols + 1
+            
+        }
+        
+        
+            
         /*
         print("portRows\(numOfPortraitRows)")
         print("portCols\(numOfPortraitCols)")
         print("landRows\(numOfLandscapeRows)")
         print("landCols\(numOfLandscapeCols)")
-         */
+        */
+        
+         
     }
     
     
