@@ -408,14 +408,42 @@ class MSweeperViewController: UIViewController {
     
     func drawElements(){
         if UIDevice.current.orientation.isLandscape == true {
-            for subView in gameBoard.arrangedSubviews {
-                if let stack = subView as? UIStackView {
-                    for tile in stack.arrangedSubviews{
+            var col = gameBoard.arrangedSubviews.count - 1
+                    for subView in gameBoard.arrangedSubviews {
                         
-                    }
-                }
-            }
+                        if let stack = subView as? UIStackView {
+                            var row = 0
+                            for tile in stack.arrangedSubviews{
+                                if let square = tile as?UITileView {
+                                    if self.revealedGameField[row][col] == 1 {
+                                    //print("drawElements() ->")
+                                       //print("col: \(col)")
+                                       //print("row: \(row)")
+                                       switch self.gameField[row][col] {
+                                       case 0...8:
+                                            square.setCount(count: self.gameField[row][col])
+                                           square.showElement = 2
+                                       case 9:
+                                           square.showElement = 4
+                                       case 10:
+                                           square.showElement = 3
+                                       default:
+                                           break
+                                       }
             
+                                    } else if self.revealedGameField[row][col] == 2 {
+                                        square.showElement = 1
+                                    } else if self.revealedGameField[row][col] == 0 {
+                                        square.showElement = 0
+                                    }
+                                }
+                                
+                                row += 1
+                            }
+                        }
+
+                        col -= 1
+                    }
         } else {
             
             //print("subView 0st element showelement \(tile?.showElement ?? -1)")
@@ -429,9 +457,9 @@ class MSweeperViewController: UIViewController {
                     for tile in stack.arrangedSubviews{
                         if let square = tile as?UITileView {
                             if self.revealedGameField[col][row] == 1 {
-                                print("drawElements() ->")
-                               print("col: \(col)")
-                               print("row: \(row)")
+                            //print("drawElements() ->")
+                               //print("col: \(col)")
+                               //print("row: \(row)")
                                switch self.gameField[col][row] {
                                case 0...8:
                                     square.setCount(count: self.gameField[col][row])
@@ -470,7 +498,7 @@ class MSweeperViewController: UIViewController {
         if flag == false {
             
             prepareUI()
-           
+            drawElements()
         }
         
         

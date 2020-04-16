@@ -35,6 +35,7 @@ class MSweeperEngine {
         
     }
     func getState() -> (Array<Array<Int>>, Array<Array<Int>>, State, Int) {
+       /*
         print("getstate() -> revealedGameField")
         for row in self.revealedGameField {
             print("\(row)")
@@ -42,7 +43,7 @@ class MSweeperEngine {
         print("getstate() -> gameField")
         for row in self.gameField {
             print("\(row)")
-        }
+        }*/
         calcWinningState()
         let bombsLeft = self.numberOfBombs - self.flagCount
         return (self.gameField, self.revealedGameField, self.state, bombsLeft)
@@ -89,11 +90,12 @@ class MSweeperEngine {
     }
     
     func handleSelection(row: Int, col: Int, flag: DarwinBoolean) {
+        print("handleSelection(row: \(row), col: \(col)")
         if self.state == .play {
             
             if self.revealedGameField[row][col] == 0{
                 if flag == true {
-                    print("self.revealedGameField[row][col] == 0 && flag == true")
+                    //print("self.revealedGameField[row][col] == 0 && flag == true")
                     self.revealedGameField[row][col] = 2
                     self.flagCount += 1
                 } else {
