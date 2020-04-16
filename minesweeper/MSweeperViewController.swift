@@ -33,7 +33,7 @@ class MSweeperViewController: UIViewController {
     var gameField: Array<Array<Int>> = []
     var gameState: State = .play
     var gameBombsCount: Int = 0
-
+    var timer = Timer()
     @IBAction func startGame(_ sender: UIButton) {
         //  Calculate col and row numbers for portrait/landscape
         
@@ -41,13 +41,17 @@ class MSweeperViewController: UIViewController {
         //  TODO: Fix UI
         //  TODO: Improve UI
         //  TODO: calculate win state
+        //  TODO: save state when changing orientation
         calculateColRow()
         gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: 0.1)
         (gameField, revealedGameField, gameBombsCount) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>, Int)
         prepareUI()
         flag = false
         gameStatus.setTitle("🙂", for: UIControl.State.normal)
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        self.gameTimer.text = "0"
+        timer.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            
             self.gameTimer.text = String((self.gameTimer.text! as NSString).integerValue + 1)
         }
         self.gameBombsLeft.text = String(self.gameBombsCount)
@@ -284,6 +288,12 @@ class MSweeperViewController: UIViewController {
         
         //  Draw UI according to current orientation
         //  drawUI(boolean) where argument 'false' is portrait and 'true' is landscape
+        if UIDevice.current.orientation.isLandscape {
+            drawUI(isLandscape: true)
+        } else {
+            drawUI(isLandscape: false)
+        }
+        /*
         switch UIDevice.current.orientation {
         case .faceUp, .faceDown, .portrait, .portraitUpsideDown:
             drawUI(isLandscape: false)
@@ -294,7 +304,7 @@ class MSweeperViewController: UIViewController {
         default:
             drawUI(isLandscape: false)
         }
-        
+        */
     }
     
     func calculateColRow(){
