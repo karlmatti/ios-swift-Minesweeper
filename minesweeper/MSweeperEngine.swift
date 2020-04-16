@@ -43,8 +43,25 @@ class MSweeperEngine {
         for row in self.gameField {
             print("\(row)")
         }
+        calcWinningState()
         let bombsLeft = self.numberOfBombs - self.flagCount
         return (self.gameField, self.revealedGameField, self.state, bombsLeft)
+    }
+    func calcWinningState(){
+        var openedTilesCount = 0
+        for row in self.revealedGameField{
+            for tile in row{
+                if tile == 1 {
+                    openedTilesCount += 1
+                }
+            }
+        }
+        let overallTilesCount = self.gameField.count * self.gameField[0].count
+        let winnerTilesCount = overallTilesCount - self.numberOfBombs
+        if openedTilesCount == winnerTilesCount{
+            self.state = .win
+        }
+     
     }
     func startGame() -> (Array<Array<Int>>, Array<Array<Int>>, Int){
         

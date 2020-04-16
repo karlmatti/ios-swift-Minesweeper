@@ -40,7 +40,6 @@ class MSweeperViewController: UIViewController {
         //  TODO: Add l1, l2, l3
         //  TODO: Fix UI
         //  TODO: Improve UI
-        //  TODO: calculate win state
         //  TODO: save state when changing orientation
         calculateColRow()
         gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: 0.1)
