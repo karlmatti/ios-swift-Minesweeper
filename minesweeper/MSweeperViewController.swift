@@ -13,7 +13,6 @@ class MSweeperViewController: UIViewController {
     
     
     
-    
 
     @IBOutlet weak var gameBoard: UIStackView!
     @IBOutlet weak var gameStatus: UIButton!
@@ -34,15 +33,42 @@ class MSweeperViewController: UIViewController {
     var gameState: State = .play
     var gameBombsCount: Int = 0
     var timer = Timer()
-    @IBAction func startGame(_ sender: UIButton) {
-        //  Calculate col and row numbers for portrait/landscape
+    var gameLevel: Double = 0.1
+    
+    @IBOutlet weak var L1: UIButton!
+    @IBOutlet weak var L2: UIButton!
+    @IBOutlet weak var L3: UIButton!
+    func resetLevelBtnColors(){
+        L1.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        L2.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        L3.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+    }
+    @IBAction func setLevel1(_ sender: UIButton) {
+        setLevel(btn: sender, level: 0.1)
+    }
+    @IBAction func setLevel2(_ sender: UIButton) {
+        setLevel(btn: sender, level: 0.2)
+    }
+    @IBAction func setLevel3(_ sender: UIButton) {
+        setLevel(btn: sender, level: 0.3)
+    }
+    func setLevel(btn: UIButton, level: Double){
+        self.gameLevel = level
+        startGame()
+        resetLevelBtnColors()
+        btn.setTitleColor(#colorLiteral(red: 0.2039215686, green: 0.7803921569, blue: 0.3490196078, alpha: 1), for: .normal)
+    }
+    
+    @IBAction func startGame() {
         
-        //  TODO: Add l1, l2, l3
+        
         //  TODO: Fix UI
         //  TODO: Improve UI
         //  TODO: save state when changing orientation
+        
+        //  Calculate col and row numbers for portrait/landscape
         calculateColRow()
-        gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: 0.1)
+        gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: self.gameLevel)
         (gameField, revealedGameField, gameBombsCount) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>, Int)
         prepareUI()
         flag = false
