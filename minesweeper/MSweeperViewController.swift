@@ -295,21 +295,18 @@ class MSweeperViewController: UIViewController {
             
             drawUI(isLandscape: true)
             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
-                print("going vertical")
+
                 OverallStackView.axis = .horizontal
                 MenuStackView.axis = .vertical
                 LevelStackView.axis = .vertical
-                
-                print("Overall axis \(OverallStackView.axis)")
-                print("Menu axis \(MenuStackView.axis)")
-                print("Level axis \(LevelStackView.axis)")
+
             }
         } else {
             
             
             drawUI(isLandscape: false)
             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
-                print("going horizontal")
+     
                 OverallStackView.axis = .vertical
                 MenuStackView.axis = .horizontal
                 LevelStackView.axis = .horizontal
@@ -347,15 +344,6 @@ class MSweeperViewController: UIViewController {
             numOfLandscapeRows = numOfPortraitCols + 1
             
         }
-        
-        
-            
-        /*
-        print("portRows\(numOfPortraitRows)")
-        print("portCols\(numOfPortraitCols)")
-        print("landRows\(numOfLandscapeRows)")
-        print("landCols\(numOfLandscapeCols)")
-        */
         
          
     }
@@ -396,9 +384,7 @@ class MSweeperViewController: UIViewController {
                             for tile in stack.arrangedSubviews{
                                 if let square = tile as?UITileView {
                                     if self.revealedGameField[row][col] == 1 {
-                                    //print("drawElements() ->")
-                                       //print("col: \(col)")
-                                       //print("row: \(row)")
+
                                        switch self.gameField[row][col] {
                                        case 0...8:
                                             square.setCount(count: self.gameField[row][col])
@@ -426,10 +412,7 @@ class MSweeperViewController: UIViewController {
                     }
         } else {
             
-            //print("subView 0st element showelement \(tile?.showElement ?? -1)")
-            
-            //print("colCount: \(colCount)")
-            //print("rowCount: \(rowCount)")
+
             var col = 0
             for subView in gameBoard.arrangedSubviews {
                 var row = 0
@@ -437,9 +420,7 @@ class MSweeperViewController: UIViewController {
                     for tile in stack.arrangedSubviews{
                         if let square = tile as?UITileView {
                             if self.revealedGameField[col][row] == 1 {
-                            //print("drawElements() ->")
-                               //print("col: \(col)")
-                               //print("row: \(row)")
+
                                switch self.gameField[col][row] {
                                case 0...8:
                                     square.setCount(count: self.gameField[col][row])
