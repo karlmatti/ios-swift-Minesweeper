@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -61,7 +61,6 @@
                                                 </subviews>
                                                 <variation key="heightClass=compact-widthClass=compact" axis="vertical"/>
                                                 <variation key="heightClass=compact-widthClass=regular" axis="vertical"/>
-                                                <variation key="heightClass=regular-widthClass=regular" axis="horizontal"/>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYO-qR-giE">
                                                 <rect key="frame" x="492" y="0.0" width="238" height="36"/>
@@ -90,7 +89,6 @@
                                         <variation key="heightClass=compact-widthClass=compact" axis="vertical"/>
                                         <variation key="heightClass=compact-widthClass=regular" axis="vertical"/>
                                         <variation key="heightClass=regular-widthClass=compact" axis="horizontal"/>
-                                        <variation key="heightClass=regular-widthClass=regular" axis="horizontal"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="fQT-ch-LFx">
                                         <rect key="frame" x="0.0" y="44" width="976" height="1254"/>
@@ -141,11 +139,11 @@
                                         <include reference="s9G-eu-vcC"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=regular" axis="vertical">
+                                <variation key="heightClass=regular-widthClass=regular">
                                     <mask key="constraints">
-                                        <include reference="bFh-W2-a0F"/>
-                                        <include reference="IAi-Kt-qoI"/>
-                                        <include reference="s9G-eu-vcC"/>
+                                        <exclude reference="bFh-W2-a0F"/>
+                                        <exclude reference="IAi-Kt-qoI"/>
+                                        <exclude reference="s9G-eu-vcC"/>
                                     </mask>
                                 </variation>
                             </stackView>
@@ -163,6 +161,9 @@
                         <outlet property="L1" destination="DQx-qC-A9S" id="Cfk-nj-7en"/>
                         <outlet property="L2" destination="Rrd-xN-T7D" id="szs-nG-8kn"/>
                         <outlet property="L3" destination="MLD-f1-SWM" id="Rdy-XR-WOJ"/>
+                        <outlet property="LevelStackView" destination="Jdh-F1-qbG" id="vkW-9C-jeV"/>
+                        <outlet property="MenuStackView" destination="xP8-NF-CO4" id="t94-SS-b8I"/>
+                        <outlet property="OverallStackView" destination="ifd-rh-9OZ" id="ToW-JV-S4U"/>
                         <outlet property="UIView" destination="8bC-Xf-vdC" id="CMa-BU-3Ga"/>
                         <outlet property="gameBoard" destination="fQT-ch-LFx" id="enS-7o-kfZ"/>
                         <outlet property="gameBombsLeft" destination="C30-9A-sU4" id="kH9-v7-T8T"/>

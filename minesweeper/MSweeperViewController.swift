@@ -11,7 +11,10 @@ import UIKit
 
 class MSweeperViewController: UIViewController {
     
-    
+  
+    @IBOutlet weak var OverallStackView: UIStackView!
+    @IBOutlet weak var MenuStackView: UIStackView!
+    @IBOutlet weak var LevelStackView: UIStackView!
     
 
     @IBOutlet weak var UIView: UIView!
@@ -63,10 +66,6 @@ class MSweeperViewController: UIViewController {
     @IBAction func startGame() {
         
         
-        //  TODO: Fix UI
-        //  TODO: Improve UI
-        //  TODO: save state when changing orientation
-        
         if UIDevice.current.orientation.isValidInterfaceOrientation {
             //  Calculate col and row numbers for portrait/landscape
             calculateColRow()
@@ -87,7 +86,6 @@ class MSweeperViewController: UIViewController {
 
     }
     func ereaseUI() {
-        //  print("erease ui\(gameBoard.arrangedSubviews.count)")
         let countSubviews = gameBoard.arrangedSubviews.count
         buttonTag = 0
         if countSubviews > 0 {
@@ -161,7 +159,6 @@ class MSweeperViewController: UIViewController {
             if let columnStack = subView as? UIStackView {
                 let button = UITileView()
                 button.tag = self.buttonTag
-                //  print("in columnAdd, bt=\(buttonTag)")
                 self.buttonTag += 1
                 
                 let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MSweeperViewController.handleTap(gesture:)))
@@ -172,10 +169,8 @@ class MSweeperViewController: UIViewController {
                 button.addGestureRecognizer(releaseTap)
                 button.addGestureRecognizer(releaseDoubleTap)
                 releaseTap.require(toFail: releaseDoubleTap)
-                //  start to write color and pick "Color Literal"
                 button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
                 button.showElement = 0
-                //  button.setTitle("\(buttonCounter)", for: UIControl.State.normal)
                 button.heightAnchor.constraint(equalTo: button.widthAnchor, multiplier: 1.0/1.0).isActive = true
                 
                 
@@ -209,31 +204,10 @@ class MSweeperViewController: UIViewController {
         switch gesture.state {
             
             case .ended:
-                //print("tap received")
-                
                 if let view = gesture.view as? UITileView {
-                    print("clicked button: \(view.tag)")
                     let (selectedRow, selectedCol) = findClickedTile(buttonTag: view.tag)
                     
                     gameEngine?.handleSelection(row: selectedRow, col: selectedCol, flag: false)
-                    /*
-                    switch view.showElement {
-                    case 0:
-                        view.showElement = 1
-                    case 1:
-                        view.showElement = 2
-                    case 2:
-                        view.showElement = 3
-                    case 3:
-                        view.showElement = 4
-                    case 4:
-                        view.showElement = 5
-                    case 5:
-                        view.showElement = 0
-                    default:
-                        break
-                    }
-                    */
                 }
             default:
                 break
@@ -246,11 +220,6 @@ class MSweeperViewController: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateOrientationUI), name: UIDevice.orientationDidChangeNotification, object: nil)
-        print("UIView.frame.size \(UIView.frame.size)")
-        let height: Int = Int(Double(UIView.frame.size.height) * 0.8)
-        let width: Int = Int(Double(UIView.frame.size.width) * 0.8)
-        print("UIView.frame.size.height \(height)")
-        print("UIView.frame.size.width \(width)")
         // Do any additional setup after loading the view.
     }
     
@@ -319,36 +288,42 @@ class MSweeperViewController: UIViewController {
     
     func prepareUI() {
         
-        //  TODO: React for Regular Regular trait -> change axis for some stackviews
-        
+   
         //  Draw UI according to current orientation
         //  drawUI(boolean) where argument 'false' is portrait and 'true' is landscape
         if UIDevice.current.orientation.isLandscape {
+            
             drawUI(isLandscape: true)
+            if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
+                print("going vertical")
+                OverallStackView.axis = .horizontal
+                MenuStackView.axis = .vertical
+                LevelStackView.axis = .vertical
+                
+                print("Overall axis \(OverallStackView.axis)")
+                print("Menu axis \(MenuStackView.axis)")
+                print("Level axis \(LevelStackView.axis)")
+            }
         } else {
+            
+            
             drawUI(isLandscape: false)
+            if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
+                print("going horizontal")
+                OverallStackView.axis = .vertical
+                MenuStackView.axis = .horizontal
+                LevelStackView.axis = .horizontal
+            }
         }
-        /*
-        switch UIDevice.current.orientation {
-        case .faceUp, .faceDown, .portrait, .portraitUpsideDown:
-            drawUI(isLandscape: false)
-        case .landscapeLeft, .landscapeRight:
-            drawUI(isLandscape: true)
-        case .unknown:
-            drawUI(isLandscape: false)
-        default:
-            drawUI(isLandscape: false)
-        }
-        */
+  
     }
     
     func calculateColRow(){
-        print("UIView.frame.size\(UIView.frame.size)")
-        print("gameBoard.frame.size\(gameBoard.frame.size)")
         var width: CGFloat = 0
         var height: CGFloat = 0
         if UIDevice.current.orientation.isLandscape == true {
-            
+            // TODO: for regular regular put less tiles
+            // if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
             height = UIView.frame.size.height * 0.9
             width = UIView.frame.size.width * 0.9 * 0.9
             
@@ -357,6 +332,7 @@ class MSweeperViewController: UIViewController {
             
             numOfLandscapeCols = numOfPortraitRows - 1
             numOfLandscapeRows = numOfPortraitCols + 1
+            
             
         } else {
             
@@ -392,9 +368,11 @@ class MSweeperViewController: UIViewController {
         if isLandscape == true {
             numOfRows = numOfLandscapeRows
             numOfCols = numOfLandscapeCols
+            
         } else {
             numOfRows = numOfPortraitRows
             numOfCols = numOfPortraitCols
+            
         }
         
         for _ in 1...numOfRows {
@@ -403,7 +381,9 @@ class MSweeperViewController: UIViewController {
         for _ in 1...numOfCols {
             columnAdd()
         }
-        //drawElements()
+        
+        
+        
     }
     
     func drawElements(){

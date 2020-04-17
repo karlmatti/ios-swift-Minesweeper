@@ -90,7 +90,7 @@ class MSweeperEngine {
     }
     
     func handleSelection(row: Int, col: Int, flag: DarwinBoolean) {
-        print("handleSelection(row: \(row), col: \(col)")
+        //print("handleSelection(row: \(row), col: \(col)")
         if self.state == .play {
             
             if self.revealedGameField[row][col] == 0{
