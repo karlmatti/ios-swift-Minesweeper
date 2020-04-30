@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5F02F75E245AB4FF00CB213C /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02F75D245AB4FF00CB213C /* OptionsViewController.swift */; };
 		5F02F760245AB55400CB213C /* CustomOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02F75F245AB55400CB213C /* CustomOptionsViewController.swift */; };
+		5F02F762245B026700CB213C /* MyUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02F761245B026700CB213C /* MyUINavigationController.swift */; };
+		5F02F764245B02D000CB213C /* MyUISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02F763245B02D000CB213C /* MyUISplitViewController.swift */; };
 		5F3CF0A024475D1100A0189E /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3CF09F24475D1100A0189E /* State.swift */; };
 		5FBB53042445DA230043304D /* MSweeperEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB53032445DA230043304D /* MSweeperEngine.swift */; };
 		E514FA3A243F1CA2009836E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FA39243F1CA2009836E9 /* AppDelegate.swift */; };
@@ -23,6 +25,8 @@
 /* Begin PBXFileReference section */
 		5F02F75D245AB4FF00CB213C /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		5F02F75F245AB55400CB213C /* CustomOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOptionsViewController.swift; sourceTree = "<group>"; };
+		5F02F761245B026700CB213C /* MyUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUINavigationController.swift; sourceTree = "<group>"; };
+		5F02F763245B02D000CB213C /* MyUISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUISplitViewController.swift; sourceTree = "<group>"; };
 		5F3CF09F24475D1100A0189E /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		5FBB53032445DA230043304D /* MSweeperEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSweeperEngine.swift; sourceTree = "<group>"; };
 		E514FA36243F1CA2009836E9 /* minesweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minesweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,9 +76,11 @@
 				E514FA3F243F1CA2009836E9 /* Main.storyboard */,
 				5F02F75D245AB4FF00CB213C /* OptionsViewController.swift */,
 				E514FA42243F1CA5009836E9 /* Assets.xcassets */,
+				5F02F763245B02D000CB213C /* MyUISplitViewController.swift */,
 				E514FA44243F1CA5009836E9 /* LaunchScreen.storyboard */,
 				E514FA47243F1CA5009836E9 /* Info.plist */,
 				5F02F75F245AB55400CB213C /* CustomOptionsViewController.swift */,
+				5F02F761245B026700CB213C /* MyUINavigationController.swift */,
 				E514FA4D243F2514009836E9 /* UITileView.swift */,
 				5FBB53032445DA230043304D /* MSweeperEngine.swift */,
 				5F3CF09F24475D1100A0189E /* State.swift */,
@@ -154,11 +160,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E514FA3E243F1CA2009836E9 /* MSweeperViewController.swift in Sources */,
+				5F02F764245B02D000CB213C /* MyUISplitViewController.swift in Sources */,
 				5FBB53042445DA230043304D /* MSweeperEngine.swift in Sources */,
 				E514FA3A243F1CA2009836E9 /* AppDelegate.swift in Sources */,
 				5F02F75E245AB4FF00CB213C /* OptionsViewController.swift in Sources */,
 				E514FA4E243F2514009836E9 /* UITileView.swift in Sources */,
 				E514FA3C243F1CA2009836E9 /* SceneDelegate.swift in Sources */,
+				5F02F762245B026700CB213C /* MyUINavigationController.swift in Sources */,
 				5F02F760245AB55400CB213C /* CustomOptionsViewController.swift in Sources */,
 				5F3CF0A024475D1100A0189E /* State.swift in Sources */,
 			);

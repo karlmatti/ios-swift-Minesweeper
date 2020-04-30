@@ -19,7 +19,7 @@ class OptionsViewController: UIViewController {
     @IBOutlet weak var isThemeEstoniaUIImageView: UIImageView!
     @IBOutlet weak var difficultyUISlider: UISlider!
     
-    var difficultyValue: String = "normal"  // easy, normal, hard, custom
+    public var difficultyValue: String = "normal"  // easy, normal, hard, custom
     var themeValue: String = "Default"  // Default, Estonia
     var fieldSizeValue: String = "100"  // 100 % to 10 %
     var bombsValue: String = "20"  // 0 to squares available
@@ -32,11 +32,14 @@ class OptionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
+      
+        print("currentBombCount is \(currentBombCount)")
+        print("fieldSizeValue is \(fieldSizeValue)")
+        //updateUI()
 
         
     }
-    func updateUI() {
+    public func updateUI() {
         difficultyValueUILabel.text = difficultyValue
         themeValueUILabel.text = themeValue
         fieldSizeValueUILabel.text = fieldSizeValue
@@ -56,8 +59,9 @@ class OptionsViewController: UIViewController {
         if let identifier = segue.identifier{
             switch identifier {
             case "Custom game settings":
-                if let viewControllerWeAreSegueingTo = segue.destination as? CustomOptionsViewController {
-                    viewControllerWeAreSegueingTo
+                print("preparing for segue Custom game settings")
+                if let vc = segue.destination as? CustomOptionsViewController {
+                    vc.optionsViewController = self
                 }
             case "Game":
                 print("in Game")
@@ -67,6 +71,24 @@ class OptionsViewController: UIViewController {
         }
         
     }
+    public func updateBombsValue(bombs: Int) {
+        self.currentBombCount = bombs
+        print("current bomb count is \(self.currentBombCount)")
+    }
+    
     
 
+}
+
+extension OptionsViewController: CustomOptionsDelegate {
+    
+    func updateBombs(bombCount: Int) {
+        self.currentBombCount = bombCount
+        print("bombCount is \(bombCount)")
+    }
+    func updateFieldSize(fieldSize: Int) {
+        self.fieldSizeValue = String(fieldSize)
+        
+        print("fieldSize is \(fieldSize)")
+    }
 }

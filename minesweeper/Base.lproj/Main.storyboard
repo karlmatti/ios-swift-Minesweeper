@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lzk-e0-Pm0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sZz-Mw-fQY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Split View Controller-->
+        <!--MyUI Split View Controller-->
         <scene sceneID="hcO-xH-6Zl">
             <objects>
-                <splitViewController id="sZz-Mw-fQY" sceneMemberID="viewController">
+                <splitViewController id="sZz-Mw-fQY" customClass="MyUISplitViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="hVC-WU-bzr" kind="relationship" relationship="masterViewController" id="pg6-aT-797"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="detailViewController" id="CqK-dy-h0i"/>
@@ -20,10 +20,10 @@
             </objects>
             <point key="canvasLocation" x="-1356" y="-145"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--MyUI Navigation Controller-->
         <scene sceneID="EDK-Qk-zim">
             <objects>
-                <navigationController id="hVC-WU-bzr" sceneMemberID="viewController">
+                <navigationController id="hVC-WU-bzr" customClass="MyUINavigationController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VFy-EI-9xW">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -39,7 +39,7 @@
         <!--Options-->
         <scene sceneID="4Ls-qb-ncr">
             <objects>
-                <viewController title="Options" id="to6-Y5-B0d" customClass="OptionsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Options" title="Options" id="to6-Y5-B0d" customClass="OptionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d9v-Dg-rYn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,7 +54,7 @@
                                         <inset key="contentEdgeInsets" minX="4" minY="2" maxX="4" maxY="2"/>
                                         <state key="normal" title="Play Game"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="showDetail" identifier="Game" id="Eae-4k-tzj"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="Game" id="LLA-Sj-BSh"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="jkW-U7-Ali">
@@ -211,16 +211,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="g4b-fr-gl4">
-                                        <rect key="frame" x="19" y="188.5" width="344" height="54.5"/>
+                                        <rect key="frame" x="9" y="188.5" width="364" height="54.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="easy - normal - hard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBA-NL-NAz">
-                                                <rect key="frame" x="94" y="0.0" width="156" height="20.5"/>
+                                                <rect key="frame" x="104" y="0.0" width="156" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.2069777397" green="0.71195419520000003" blue="0.35667273119999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="urq-UC-Elr">
-                                                <rect key="frame" x="-2" y="24.5" width="348" height="31"/>
+                                                <rect key="frame" x="-2" y="24.5" width="368" height="31"/>
                                                 <color key="tintColor" red="0.2069777397" green="0.71195419520000003" blue="0.35667273119999998" alpha="1" colorSpace="calibratedRGB"/>
                                             </slider>
                                         </subviews>
@@ -234,7 +234,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Lzk-e0-Pm0" kind="showDetail" identifier="Custom game settings" id="sZH-En-32l"/>
+                                            <segue destination="Lzk-e0-Pm0" kind="show" identifier="Custom game settings" id="nql-MH-zOx"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -250,15 +250,6 @@
                         <viewLayoutGuide key="safeArea" id="Gea-pq-Fgh"/>
                     </view>
                     <navigationItem key="navigationItem" title="Options" id="wb8-vw-K6u"/>
-                    <connections>
-                        <outlet property="bombsValueUILabel" destination="ZNK-HG-1FQ" id="71t-D7-AHf"/>
-                        <outlet property="difficultyUISlider" destination="urq-UC-Elr" id="qNR-KE-XFs"/>
-                        <outlet property="difficultyValueUILabel" destination="t8i-hV-ctO" id="QDo-kg-En4"/>
-                        <outlet property="fieldSizeValueUILabel" destination="rE3-AM-KSV" id="1VD-3g-RIq"/>
-                        <outlet property="isThemeDefaultUIImageView" destination="2dg-3F-g5j" id="jCk-zB-Zi8"/>
-                        <outlet property="isThemeEstoniaUIImageView" destination="Axx-VE-EYv" id="Mdf-Te-hcb"/>
-                        <outlet property="themeValueUILabel" destination="U16-NJ-obO" id="Hsz-3E-L6c"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ru-OO-Tl0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -267,7 +258,7 @@
         <!--Game-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Game" id="BYZ-38-t0r" customClass="MSweeperViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Game" title="Game" id="BYZ-38-t0r" customClass="MSweeperViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -436,7 +427,7 @@
         <!--Custom game settings-->
         <scene sceneID="z0N-e9-2RC">
             <objects>
-                <viewController title="Custom game settings" id="Lzk-e0-Pm0" customClass="CustomOptionsViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Custom game settings" title="Custom game settings" id="Lzk-e0-Pm0" customClass="CustomOptionsViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="F7Y-59-gGS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -485,6 +476,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bXe-wI-zeH"/>
                     </view>
+                    <navigationItem key="navigationItem" id="lX0-GG-2K6"/>
                     <connections>
                         <outlet property="bombsSlider" destination="2br-5I-sY3" id="zPe-6g-rcm"/>
                         <outlet property="bombsUILabel" destination="4Hl-ER-1g8" id="wcf-QA-PY6"/>
@@ -499,7 +491,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Eae-4k-tzj"/>
+        <segue reference="LLA-Sj-BSh"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.2069777397" green="0.71195419520000003" blue="0.35667273119999998" alpha="1" colorSpace="calibratedRGB"/>
     <resources>
