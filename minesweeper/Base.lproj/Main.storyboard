@@ -39,13 +39,13 @@
         <!--Options-->
         <scene sceneID="4Ls-qb-ncr">
             <objects>
-                <viewController storyboardIdentifier="Options" title="Options" id="to6-Y5-B0d" customClass="OptionsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Options" title="Options" id="to6-Y5-B0d" customClass="OptionsViewController" customModule="minesweeper" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d9v-Dg-rYn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZaU-Ym-dmC">
-                                <rect key="frame" x="16" y="104" width="382" height="279"/>
+                                <rect key="frame" x="16" y="104" width="382" height="280.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hog-wX-9C8">
                                         <rect key="frame" x="124.5" y="0.0" width="133" height="34"/>
@@ -54,7 +54,7 @@
                                         <inset key="contentEdgeInsets" minX="4" minY="2" maxX="4" maxY="2"/>
                                         <state key="normal" title="Play Game"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="Game" id="LLA-Sj-BSh"/>
+                                            <segue destination="BYZ-38-t0r" kind="showDetail" identifier="Game" id="LLA-Sj-BSh"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="jkW-U7-Ali">
@@ -147,7 +147,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="d8l-Xh-Izb">
-                                        <rect key="frame" x="107.5" y="132" width="167" height="48.5"/>
+                                        <rect key="frame" x="107.5" y="132" width="167" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Choose theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SG-4H-1mG">
                                                 <rect key="frame" x="20" y="0.0" width="127.5" height="24"/>
@@ -156,16 +156,20 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7q5-Jb-5yU">
-                                                <rect key="frame" x="0.0" y="28" width="167" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="28" width="167" height="22"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="M6c-h9-DKU">
-                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="22"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2dg-3F-g5j">
-                                                                <rect key="frame" x="0.0" y="2" width="20.5" height="17.5"/>
-                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p47-KB-BTy">
+                                                                <rect key="frame" x="0.0" y="0.0" width="20.5" height="22"/>
+                                                                <state key="normal" image="heart.fill" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="handleSetThemeToDefault:" destination="to6-Y5-B0d" eventType="touchUpInside" id="7k3-uf-SSk"/>
+                                                                </connections>
+                                                            </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiT-zp-pzz">
-                                                                <rect key="frame" x="24.5" y="0.0" width="53.5" height="20.5"/>
+                                                                <rect key="frame" x="24.5" y="1" width="53.5" height="20.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -173,13 +177,17 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="9Mi-JX-JDM">
-                                                        <rect key="frame" x="86" y="0.0" width="81" height="20.5"/>
+                                                        <rect key="frame" x="86" y="0.0" width="81" height="22"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Axx-VE-EYv">
-                                                                <rect key="frame" x="0.0" y="2" width="20.5" height="17.5"/>
-                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfd-1D-YI8">
+                                                                <rect key="frame" x="0.0" y="0.0" width="20.5" height="22"/>
+                                                                <state key="normal" image="heart" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="handleSetThemeToEstonia:" destination="to6-Y5-B0d" eventType="touchUpInside" id="N5a-yq-elW"/>
+                                                                </connections>
+                                                            </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOZ-HA-5IB">
-                                                                <rect key="frame" x="24.5" y="0.0" width="56.5" height="20.5"/>
+                                                                <rect key="frame" x="24.5" y="1" width="56.5" height="20.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Es" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cA0-4e-ayw">
                                                                         <rect key="frame" x="0.0" y="0.0" width="18.5" height="20.5"/>
@@ -211,22 +219,29 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="g4b-fr-gl4">
-                                        <rect key="frame" x="9" y="188.5" width="364" height="54.5"/>
+                                        <rect key="frame" x="0.0" y="190" width="382" height="54.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="easy - normal - hard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBA-NL-NAz">
-                                                <rect key="frame" x="104" y="0.0" width="156" height="20.5"/>
+                                                <rect key="frame" x="113" y="0.0" width="156" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.2069777397" green="0.71195419520000003" blue="0.35667273119999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="urq-UC-Elr">
-                                                <rect key="frame" x="-2" y="24.5" width="368" height="31"/>
+                                                <rect key="frame" x="30" y="24.5" width="322" height="31"/>
                                                 <color key="tintColor" red="0.2069777397" green="0.71195419520000003" blue="0.35667273119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <action selector="gameDifficultyOnValueChange:" destination="to6-Y5-B0d" eventType="valueChanged" id="Q8H-Wz-mG5"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="urq-UC-Elr" secondAttribute="trailing" constant="32" id="W3V-y1-2x6"/>
+                                            <constraint firstItem="urq-UC-Elr" firstAttribute="leading" secondItem="g4b-fr-gl4" secondAttribute="leading" constant="32" id="oVv-u4-kdm"/>
+                                        </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oU3-82-n94">
-                                        <rect key="frame" x="89" y="251" width="204" height="28"/>
+                                        <rect key="frame" x="89" y="252.5" width="204" height="28"/>
                                         <color key="backgroundColor" red="0.2069777397" green="0.71195419520000003" blue="0.35667273119999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <inset key="contentEdgeInsets" minX="4" minY="2" maxX="4" maxY="2"/>
@@ -234,7 +249,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Lzk-e0-Pm0" kind="show" identifier="Custom game settings" id="nql-MH-zOx"/>
+                                            <segue destination="Lzk-e0-Pm0" kind="showDetail" identifier="Custom game settings" id="nql-MH-zOx"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -250,6 +265,15 @@
                         <viewLayoutGuide key="safeArea" id="Gea-pq-Fgh"/>
                     </view>
                     <navigationItem key="navigationItem" title="Options" id="wb8-vw-K6u"/>
+                    <connections>
+                        <outlet property="bombsValueUILabel" destination="ZNK-HG-1FQ" id="2TU-3T-qgh"/>
+                        <outlet property="defaultThemeUIButton" destination="p47-KB-BTy" id="1c3-NF-kO4"/>
+                        <outlet property="difficultyUISlider" destination="urq-UC-Elr" id="sEs-YW-mW5"/>
+                        <outlet property="difficultyValueUILabel" destination="t8i-hV-ctO" id="bZX-Ue-Xuw"/>
+                        <outlet property="estoniaThemeUIButton" destination="nfd-1D-YI8" id="Zvw-UD-Cou"/>
+                        <outlet property="fieldSizeValueUILabel" destination="rE3-AM-KSV" id="hH0-Rz-1B0"/>
+                        <outlet property="themeValueUILabel" destination="U16-NJ-obO" id="Rwt-wV-5iq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ru-OO-Tl0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -258,7 +282,7 @@
         <!--Game-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="Game" title="Game" id="BYZ-38-t0r" customClass="MSweeperViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Game" title="Game" id="BYZ-38-t0r" customClass="MSweeperViewController" customModule="minesweeper" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -427,7 +451,7 @@
         <!--Custom game settings-->
         <scene sceneID="z0N-e9-2RC">
             <objects>
-                <viewController storyboardIdentifier="Custom game settings" title="Custom game settings" id="Lzk-e0-Pm0" customClass="CustomOptionsViewController" customModule="minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Custom game settings" title="Custom game settings" id="Lzk-e0-Pm0" customClass="CustomOptionsViewController" customModule="minesweeper" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="F7Y-59-gGS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

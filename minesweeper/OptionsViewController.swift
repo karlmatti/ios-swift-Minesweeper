@@ -15,26 +15,26 @@ class OptionsViewController: UIViewController {
     @IBOutlet weak var fieldSizeValueUILabel: UILabel!
     @IBOutlet weak var bombsValueUILabel: UILabel!
     
-    @IBOutlet weak var isThemeDefaultUIImageView: UIImageView!
-    @IBOutlet weak var isThemeEstoniaUIImageView: UIImageView!
+
     @IBOutlet weak var difficultyUISlider: UISlider!
     
     public var difficultyValue: String = "normal"  // easy, normal, hard, custom
-    var themeValue: String = "Default"  // Default, Estonia
-    var fieldSizeValue: String = "100"  // 100 % to 10 %
-    var bombsValue: String = "20"  // 0 to squares available
+    var themeValue: String = "default"  // Default, Estonia
     
     var checkedImage = UIImage(systemName: "heart.fill")! as UIImage
     var uncheckedImage = UIImage(systemName: "heart")! as UIImage
+    var currentFieldSize: Int = 100  // 100 % to 10 %
     
-    var currentBombCount: Int = 20
-    var maxBombCount: Int = 100
+    let easyBombs :Int = 10
+    let normalBombs :Int = 20
+    let hardBombs :Int = 30
+    var currentBombs: Int = 20  // 0 to maximumBombs
+    var maximumBombs: Int = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        print("currentBombCount is \(currentBombCount)")
-        print("fieldSizeValue is \(fieldSizeValue)")
+
         //updateUI()
 
         
@@ -42,8 +42,8 @@ class OptionsViewController: UIViewController {
     public func updateUI() {
         difficultyValueUILabel.text = difficultyValue
         themeValueUILabel.text = themeValue
-        fieldSizeValueUILabel.text = fieldSizeValue
-        bombsValueUILabel.text = bombsValue
+        fieldSizeValueUILabel.text = String(currentFieldSize)
+        bombsValueUILabel.text = String(currentBombs)
     }
     
 
@@ -62,6 +62,9 @@ class OptionsViewController: UIViewController {
                 print("preparing for segue Custom game settings")
                 if let vc = segue.destination as? CustomOptionsViewController {
                     vc.optionsViewController = self
+                    vc.currentFieldSize = self.currentFieldSize
+                    vc.currentBombs = self.currentBombs
+                    vc.maximumBombs = self.maximumBombs
                 }
             case "Game":
                 print("in Game")
@@ -71,24 +74,60 @@ class OptionsViewController: UIViewController {
         }
         
     }
+    
+    @IBAction func gameDifficultyOnValueChange(_ sender: UISlider) {
+        let divider: Float = 1 / 3
+
+        if sender.value <= divider { // easy
+            self.difficultyValue = "easy"
+            self.currentBombs = self.easyBombs
+            
+        } else if sender.value <= divider * 2 { // normal
+            self.difficultyValue = "normal"
+            self.currentBombs = self.normalBombs
+            
+        } else { // hard
+            self.difficultyValue = "hard"
+            self.currentBombs = self.hardBombs
+            
+        }
+        self.difficultyValueUILabel.text = self.difficultyValue
+        self.bombsValueUILabel.text = String(self.currentBombs)
+        self.currentFieldSize = 100
+        self.fieldSizeValueUILabel.text = String(self.currentFieldSize)
+    }
+    
     public func updateBombsValue(bombs: Int) {
-        self.currentBombCount = bombs
-        print("current bomb count is \(self.currentBombCount)")
+        self.currentBombs = bombs
+        self.bombsValueUILabel.text = String(bombs)
+        self.difficultyValue = "custom"
+        self.difficultyValueUILabel.text = self.difficultyValue
+    }
+    public func updateFieldSize(fieldSize: Int) {
+        self.currentFieldSize = fieldSize
+        self.fieldSizeValueUILabel.text = String(fieldSize)
+        self.difficultyValue = "custom"
+        self.difficultyValueUILabel.text = self.difficultyValue
+    }
+    
+    
+    @IBOutlet weak var estoniaThemeUIButton: UIButton!
+    @IBOutlet weak var defaultThemeUIButton: UIButton!
+    @IBAction func handleSetThemeToDefault(_ sender: UIButton) {
+        self.themeValue = "default"
+        self.themeValueUILabel.text = self.themeValue
+        sender.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
+        estoniaThemeUIButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
+    }
+    
+    @IBAction func handleSetThemeToEstonia(_ sender: UIButton) {
+        self.themeValue = "estonia"
+        self.themeValueUILabel.text = self.themeValue
+        sender.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
+        defaultThemeUIButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
     }
     
     
 
 }
 
-extension OptionsViewController: CustomOptionsDelegate {
-    
-    func updateBombs(bombCount: Int) {
-        self.currentBombCount = bombCount
-        print("bombCount is \(bombCount)")
-    }
-    func updateFieldSize(fieldSize: Int) {
-        self.fieldSizeValue = String(fieldSize)
-        
-        print("fieldSize is \(fieldSize)")
-    }
-}

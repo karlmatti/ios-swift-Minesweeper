@@ -8,10 +8,7 @@
 
 import UIKit
 
-protocol CustomOptionsDelegate:class {
-    func updateBombs(bombCount: Int)
-    func updateFieldSize(fieldSize: Int)
-}
+
 
 class CustomOptionsViewController: UIViewController {
     @IBOutlet weak var fieldSizeUILabel: UILabel!
@@ -21,9 +18,8 @@ class CustomOptionsViewController: UIViewController {
     @IBOutlet weak var bombsSlider: UISlider!
     var maximumBombs: Int = 4
     var currentBombs: Int = 1
-    var fieldSize: Int = 100
+    var currentFieldSize: Int = 100
     
-    var delegate: CustomOptionsDelegate?
 
     var optionsViewController: OptionsViewController?
     
@@ -39,15 +35,15 @@ class CustomOptionsViewController: UIViewController {
         bombsUILabel.text = "Bombs: \(currentBombs)"
         
         fieldSizeSlider.minimumValue = 0.1
-        fieldSizeSlider.value = Float(fieldSize / 100)
-        fieldSizeUILabel.text = "Field Size(%): \(fieldSize)"
+        fieldSizeSlider.value = Float(currentFieldSize / 100)
+        fieldSizeUILabel.text = "Field Size(%): \(currentFieldSize)"
     }
     
     @IBAction func FieldSizeSliderOnValueChange(_ sender: UISlider) {
-        fieldSize = roundUp(Int(sender.value * 100), toNearest: 10)
+        currentFieldSize = roundUp(Int(sender.value * 100), toNearest: 10)
         
-        fieldSizeUILabel.text = "Field Size(%): \(fieldSize)"
-
+        fieldSizeUILabel.text = "Field Size(%): \(currentFieldSize)"
+        optionsViewController?.updateFieldSize(fieldSize: currentFieldSize)
 
     }
     
