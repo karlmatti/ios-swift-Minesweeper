@@ -22,12 +22,22 @@ class UITileView: UIView{
     var colorFlag: UIColor = UIColor.orange {didSet {setNeedsDisplay()}}
     
     @IBInspectable
+    var colorEstoniaBlue: UIColor = UIColor.blue {didSet {setNeedsDisplay()}}
+    @IBInspectable
+    var colorEstoniaBlack: UIColor = UIColor.black {didSet {setNeedsDisplay()}}
+    @IBInspectable
+    var colorEstoniaWhite: UIColor = UIColor.white {didSet {setNeedsDisplay()}}
+    @IBInspectable
+    var colorEstoniaYellow: UIColor = UIColor.yellow {didSet {setNeedsDisplay()}}
+    
+    @IBInspectable
     var positionX: Int = 0 {didSet {setNeedsDisplay()}}
     @IBInspectable
     var positionY: Int = 0 {didSet {setNeedsDisplay()}}
     @IBInspectable
     var lineWidth: Int = 6 {didSet {setNeedsDisplay()}}
 
+    private var currentTheme: String = "default"
     
     private var viewUpperLeftCorner: CGPoint {return CGPoint(x:0, y:0)}
     private var viewUpperRightCorner: CGPoint {return CGPoint(x: bounds.maxX, y:0)}
@@ -41,6 +51,20 @@ class UITileView: UIView{
     private var viewMidPoint: CGPoint {return CGPoint(x: bounds.midX, y:bounds.midY)}
     private var circleRadius: CGFloat {return min(bounds.width, bounds.height) / 2 * 0.8}
     private var count = 0
+    
+    private var tricolorTopStart: CGPoint {return CGPoint(x:bounds.maxX * 0.4, y:bounds.maxY * 0.2)}
+    private var tricolorTopEnd: CGPoint {return CGPoint(x:bounds.maxX * 0.8, y:bounds.maxY * 0.3)}
+    
+    private var tricolorMidStart: CGPoint {return CGPoint(x:bounds.maxX * 0.4, y:bounds.maxY * 0.3)}
+    private var tricolorMidEnd: CGPoint {return CGPoint(x:bounds.maxX * 0.8, y:bounds.maxY * 0.4)}
+    
+    private var tricolorBottomStart: CGPoint {return CGPoint(x:bounds.maxX * 0.4, y:bounds.maxY * 0.4)}
+    private var tricolorBottomEnd: CGPoint {return CGPoint(x:bounds.maxX * 0.8, y:bounds.maxY * 0.5)}
+    
+    private var flagPoleStart: CGPoint {return CGPoint(x:bounds.maxX * 0.4, y:bounds.maxY * 0.1)}
+    private var flagPoleEnd: CGPoint {return CGPoint(x:bounds.maxX * 0.3, y:bounds.maxY * 0.8)}
+    
+
     func setCount(count: Int){
         self.count = count
     }
@@ -48,14 +72,26 @@ class UITileView: UIView{
         
         let context=UIGraphicsGetCurrentContext()!
         switch showElement {
+        case 0:
+            colorEstoniaBlue.set()
+            var flag = pathForStripe(stripeStart: tricolorTopStart, stripeEnd: tricolorTopEnd, lineWidth: lineWidth)
+            flag.stroke()
+            colorEstoniaBlack.set()
+            flag = pathForStripe(stripeStart: tricolorMidStart, stripeEnd: tricolorMidEnd, lineWidth: lineWidth)
+            flag.stroke()
+            colorEstoniaWhite.set()
+            flag = pathForStripe(stripeStart: tricolorBottomStart, stripeEnd: tricolorBottomEnd, lineWidth: lineWidth)
+            flag.stroke()
+            colorEstoniaYellow.set()
+            flag = pathForStripe(stripeStart: flagPoleStart, stripeEnd: flagPoleEnd, lineWidth: lineWidth)
+            flag.stroke()
         case 1:
             colorFlag.set()
             let flag = pathForFlag(firstLineStart: viewTopMidPoint, firstLineEnd: viewBottomMidPoint, secondLineStart: viewTopMidPoint, secondLineEnd: viewRightMidPoint, thirdLineStart: viewRightMidPoint, thirdLineEnd: viewMidPoint, lineWidth: lineWidth)
             flag.stroke()
+
         case 2:
-            
-        
-            
+           
             context.setFillColor(gray: 1.0, alpha: 1.0)
             context.fill(rect)
             var countString = ""
@@ -134,8 +170,24 @@ class UITileView: UIView{
         
         return path
     }
+    
+    private func pathForTricolorFlag(upperColorStart: CGPoint, upperColorEnd: CGPoint, midColorStart: CGPoint, midColorEnd: CGPoint, bottomColorStart: CGPoint, bottomColorEnd: CGPoint, flagPoleStart: CGPoint, flagPoleEnd: CGPoint, lineWidth: Int)-> UIBezierPath {
+        let path = UIBezierPath()
+        path.lineWidth = CGFloat(lineWidth)
         
-
+        
+        
+        return path
+    }
+        
+    private func pathForStripe(stripeStart: CGPoint, stripeEnd: CGPoint, lineWidth: Int)-> UIBezierPath {
+        let path = UIBezierPath()
+        path.lineWidth = CGFloat(lineWidth)
+        path.move(to: stripeStart)
+        path.addLine(to: stripeEnd)
+        return path
+    }
+    
 
     func drawUnknownTile(_ rect: CGRect, context: CGContext) {
         context.setFillColor(gray: 0.75, alpha: 1.0)

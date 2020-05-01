@@ -34,7 +34,7 @@ class CustomOptionsViewController: UIViewController {
         bombsSlider.value = Float(currentBombs)
         bombsUILabel.text = "Bombs: \(currentBombs)"
         
-        fieldSizeSlider.minimumValue = 0.1
+        fieldSizeSlider.minimumValue = 0.2
         fieldSizeSlider.value = Float(currentFieldSize / 100)
         fieldSizeUILabel.text = "Field Size(%): \(currentFieldSize)"
     }

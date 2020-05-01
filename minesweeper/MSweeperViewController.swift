@@ -14,7 +14,7 @@ class MSweeperViewController: UIViewController {
   
     @IBOutlet weak var OverallStackView: UIStackView!
     @IBOutlet weak var MenuStackView: UIStackView!
-    @IBOutlet weak var LevelStackView: UIStackView!
+
     
 
     @IBOutlet weak var UIView: UIView!
@@ -39,29 +39,10 @@ class MSweeperViewController: UIViewController {
     var timer = Timer()
     var gameLevel: Double = 0.1
     
-    @IBOutlet weak var L1: UIButton!
-    @IBOutlet weak var L2: UIButton!
-    @IBOutlet weak var L3: UIButton!
-    func resetLevelBtnColors(){
-        L1.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-        L2.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-        L3.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-    }
-    @IBAction func setLevel1(_ sender: UIButton) {
-        setLevel(btn: sender, level: 0.1)
-    }
-    @IBAction func setLevel2(_ sender: UIButton) {
-        setLevel(btn: sender, level: 0.2)
-    }
-    @IBAction func setLevel3(_ sender: UIButton) {
-        setLevel(btn: sender, level: 0.3)
-    }
-    func setLevel(btn: UIButton, level: Double){
-        self.gameLevel = level
-        startGame()
-        resetLevelBtnColors()
-        btn.setTitleColor(#colorLiteral(red: 0.2039215686, green: 0.7803921569, blue: 0.3490196078, alpha: 1), for: .normal)
-    }
+    var currentBombs: Int = 20
+    var currentFieldSize: Int = 100
+    var currentTheme: String = "default"
+    
     
     @IBAction func startGame() {
         
@@ -96,7 +77,12 @@ class MSweeperViewController: UIViewController {
         
         
     }
-    
+
+    func updateGameOptions(newBombs: Int, newFieldSize: Int, newTheme: String){
+        self.currentBombs = newBombs
+        self.currentFieldSize = newFieldSize
+        self.currentTheme = newTheme
+    }
     
     func rowAdd() {
         if (gameBoard.arrangedSubviews.count == 0){
@@ -122,8 +108,13 @@ class MSweeperViewController: UIViewController {
                     let releaseTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MSweeperViewController.handleTap(gesture:)))
                     button.addGestureRecognizer(releaseTap)
                     //  start to write color and pick "Color Literal"
-                    button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                    button.showElement = 0
+                    if self.currentTheme == "default"{
+                        button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                    } else if self.currentTheme == "estonia"{
+                        button.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+                    }
+                    
+                    button.showElement = -1
                     //  button.setTitle("\(buttonCounter)", for: UIControl.State.normal)
                     button.heightAnchor.constraint(equalTo: button.widthAnchor, multiplier: 1.0/1.0).isActive = true
                     
@@ -169,8 +160,12 @@ class MSweeperViewController: UIViewController {
                 button.addGestureRecognizer(releaseTap)
                 button.addGestureRecognizer(releaseDoubleTap)
                 releaseTap.require(toFail: releaseDoubleTap)
-                button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                button.showElement = 0
+                if self.currentTheme == "default"{
+                    button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                } else if self.currentTheme == "estonia"{
+                    button.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+                }
+                button.showElement = -1
                 button.heightAnchor.constraint(equalTo: button.widthAnchor, multiplier: 1.0/1.0).isActive = true
                 
                 
@@ -189,6 +184,7 @@ class MSweeperViewController: UIViewController {
             case .ended:
                 
                 if let view = gesture.view as? UITileView {
+                    
                     let (selectedRow, selectedCol) = findClickedTile(buttonTag: view.tag)
                     gameEngine?.handleSelection(row: selectedRow, col: selectedCol, flag: true)
     
@@ -295,57 +291,89 @@ class MSweeperViewController: UIViewController {
             
             drawUI(isLandscape: true)
             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
-
                 OverallStackView.axis = .horizontal
                 MenuStackView.axis = .vertical
-                LevelStackView.axis = .vertical
-
             }
-        } else {
             
+        } else {
             
             drawUI(isLandscape: false)
             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
-     
                 OverallStackView.axis = .vertical
                 MenuStackView.axis = .horizontal
-                LevelStackView.axis = .horizontal
             }
+            
         }
   
     }
     
     func calculateColRow(){
+        
         var width: CGFloat = 0
         var height: CGFloat = 0
         if UIDevice.current.orientation.isLandscape == true {
             // TODO: for regular regular put less tiles
-            // if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
-            height = UIView.frame.size.height * 0.9
-            width = UIView.frame.size.width * 0.9 * 0.9
+            if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
+                height = UIView.frame.size.height * 0.9
+                width = UIView.frame.size.width * 0.9 * 0.75
+                
+                numOfPortraitCols = Int((height / 40).rounded())
+                numOfPortraitRows = Int((width / 40).rounded())
+                
+                numOfLandscapeCols = numOfPortraitRows - 1
+                numOfLandscapeRows = numOfPortraitCols + 1
+                
+                
+            } else {
+                height = UIView.frame.size.height * 0.9
+                width = UIView.frame.size.width * 0.9 * 0.9
+                
+                numOfPortraitCols = Int((height / 40).rounded())
+                numOfPortraitRows = Int((width / 40).rounded())
+                
+                numOfLandscapeCols = numOfPortraitRows - 1
+                numOfLandscapeRows = numOfPortraitCols + 1
+            }
             
-            numOfPortraitCols = Int((height / 40).rounded())
-            numOfPortraitRows = Int((width / 40).rounded())
-            
-            numOfLandscapeCols = numOfPortraitRows - 1
-            numOfLandscapeRows = numOfPortraitCols + 1
             
             
         } else {
+             if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular{
+                height = UIView.frame.size.width * 0.9
+                width = UIView.frame.size.height * 0.9 * 0.75
+                
+                
+                numOfPortraitCols = Int((height / 40).rounded())
+                numOfPortraitRows = Int((width / 40).rounded())
+                
+                numOfLandscapeCols = numOfPortraitRows - 1
+                numOfLandscapeRows = numOfPortraitCols + 1
+                
+             } else {
+                height = UIView.frame.size.width * 0.9
+                width = UIView.frame.size.height * 0.9 * 0.9
+                
+                
+                numOfPortraitCols = Int((height / 40).rounded())
+                numOfPortraitRows = Int((width / 40).rounded())
+                
+                numOfLandscapeCols = numOfPortraitRows - 1
+                numOfLandscapeRows = numOfPortraitCols + 1
+            }
             
-            height = UIView.frame.size.width * 0.9
-            width = UIView.frame.size.height * 0.9 * 0.9
-            
-            
-            numOfPortraitCols = Int((height / 40).rounded())
-            numOfPortraitRows = Int((width / 40).rounded())
-            
-            numOfLandscapeCols = numOfPortraitRows - 1
-            numOfLandscapeRows = numOfPortraitCols + 1
             
         }
         
-         
+        let coeficent: Float = Float(Float(self.currentFieldSize) / Float(100))
+        print("coeficent is \(coeficent)")
+       
+        if numOfPortraitCols > numOfPortraitRows{
+            numOfPortraitCols = Int(Float(numOfPortraitCols) * coeficent)
+            numOfLandscapeRows = numOfPortraitCols + 1
+        } else {
+            numOfPortraitRows = Int(Float(numOfPortraitRows) * coeficent)
+            numOfLandscapeCols = numOfPortraitRows - 1
+        }
     }
     
     
@@ -398,9 +426,15 @@ class MSweeperViewController: UIViewController {
                                        }
             
                                     } else if self.revealedGameField[row][col] == 2 {
-                                        square.showElement = 1
+                                        print("current theme is \(self.currentTheme)")
+                                        if self.currentTheme == "default"{
+                                            square.showElement = 1
+                                        } else if self.currentTheme == "estonia"{
+                                            square.showElement = 0
+                                        }
+                                        
                                     } else if self.revealedGameField[row][col] == 0 {
-                                        square.showElement = 0
+                                        square.showElement = -1
                                     }
                                 }
                                 
@@ -434,9 +468,13 @@ class MSweeperViewController: UIViewController {
                                }
     
                             } else if self.revealedGameField[col][row] == 2 {
-                                square.showElement = 1
+                                if self.currentTheme == "default"{
+                                    square.showElement = 1
+                                } else if self.currentTheme == "estonia"{
+                                    square.showElement = 0
+                                }
                             } else if self.revealedGameField[col][row] == 0 {
-                                square.showElement = 0
+                                square.showElement = -1
                             }
                         }
                         
@@ -450,8 +488,10 @@ class MSweeperViewController: UIViewController {
         }
         if self.gameState == .lose {
             gameStatus.setTitle("🤯", for: UIControl.State.normal)
+            timer.invalidate()
         } else if self.gameState == .win {
             gameStatus.setTitle("🥳", for: UIControl.State.normal)
+            timer.invalidate()
         }
         gameBombsLeft.text = String(self.gameBombsCount)
     }

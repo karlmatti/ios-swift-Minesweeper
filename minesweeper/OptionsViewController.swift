@@ -19,29 +19,29 @@ class OptionsViewController: UIViewController {
     @IBOutlet weak var difficultyUISlider: UISlider!
     
     public var difficultyValue: String = "normal"  // easy, normal, hard, custom
-    var themeValue: String = "default"  // Default, Estonia
     
+    var currentTheme: String = "default"  // 'default', 'estonia
     var checkedImage = UIImage(systemName: "heart.fill")! as UIImage
     var uncheckedImage = UIImage(systemName: "heart")! as UIImage
-    var currentFieldSize: Int = 100  // 100 % to 10 %
     
+    var currentFieldSize: Int = 100  // 10 % to 100 %
+    
+    var currentBombs: Int = 20  // 0 % to 100 %
     let easyBombs :Int = 10
     let normalBombs :Int = 20
     let hardBombs :Int = 30
-    var currentBombs: Int = 20  // 0 to maximumBombs
     var maximumBombs: Int = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-
-        //updateUI()
+    
+        updateUI()
 
         
     }
     public func updateUI() {
         difficultyValueUILabel.text = difficultyValue
-        themeValueUILabel.text = themeValue
+        themeValueUILabel.text = currentTheme
         fieldSizeValueUILabel.text = String(currentFieldSize)
         bombsValueUILabel.text = String(currentBombs)
     }
@@ -68,11 +68,25 @@ class OptionsViewController: UIViewController {
                 }
             case "Game":
                 print("in Game")
+                if let vc = segue.destination as? MSweeperViewController {
+                    vc.updateGameOptions(newBombs: self.currentBombs, newFieldSize: self.currentFieldSize, newTheme: self.currentTheme)
+                }
             default:
                 print("Controller for \(identifier) not found!")
             }
         }
         
+    }
+    func updateGame(){
+        if self.splitViewController?.viewControllers.last is MSweeperViewController {
+            print("Current splitview detail is MSweeperViewController")
+            let vc = self.splitViewController?.viewControllers.last as! MSweeperViewController
+            vc.updateGameOptions(newBombs: self.currentBombs, newFieldSize: self.currentFieldSize, newTheme: self.currentTheme)
+        } else if self.navigationController?.viewControllers.last is MSweeperViewController {
+            print("Current navigation detail is MSweeperViewController")
+            let vc = self.navigationController?.viewControllers.last as! MSweeperViewController
+            vc.updateGameOptions(newBombs: self.currentBombs, newFieldSize: self.currentFieldSize, newTheme: self.currentTheme)
+        }
     }
     
     @IBAction func gameDifficultyOnValueChange(_ sender: UISlider) {
@@ -95,6 +109,7 @@ class OptionsViewController: UIViewController {
         self.bombsValueUILabel.text = String(self.currentBombs)
         self.currentFieldSize = 100
         self.fieldSizeValueUILabel.text = String(self.currentFieldSize)
+        updateGame()
     }
     
     public func updateBombsValue(bombs: Int) {
@@ -102,29 +117,33 @@ class OptionsViewController: UIViewController {
         self.bombsValueUILabel.text = String(bombs)
         self.difficultyValue = "custom"
         self.difficultyValueUILabel.text = self.difficultyValue
+        updateGame()
     }
     public func updateFieldSize(fieldSize: Int) {
         self.currentFieldSize = fieldSize
         self.fieldSizeValueUILabel.text = String(fieldSize)
         self.difficultyValue = "custom"
         self.difficultyValueUILabel.text = self.difficultyValue
+        updateGame()
     }
     
     
     @IBOutlet weak var estoniaThemeUIButton: UIButton!
     @IBOutlet weak var defaultThemeUIButton: UIButton!
     @IBAction func handleSetThemeToDefault(_ sender: UIButton) {
-        self.themeValue = "default"
-        self.themeValueUILabel.text = self.themeValue
-        sender.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
-        estoniaThemeUIButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
+        self.currentTheme = "default"
+        self.themeValueUILabel.text = self.currentTheme
+        sender.setImage(checkedImage, for: UIControl.State.normal)
+        estoniaThemeUIButton.setImage(uncheckedImage, for: UIControl.State.normal)
+        updateGame()
     }
     
     @IBAction func handleSetThemeToEstonia(_ sender: UIButton) {
-        self.themeValue = "estonia"
-        self.themeValueUILabel.text = self.themeValue
-        sender.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
-        defaultThemeUIButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
+        self.currentTheme = "estonia"
+        self.themeValueUILabel.text = self.currentTheme
+        sender.setImage(checkedImage, for: UIControl.State.normal)
+        defaultThemeUIButton.setImage(uncheckedImage, for: UIControl.State.normal)
+        updateGame()
     }
     
     
