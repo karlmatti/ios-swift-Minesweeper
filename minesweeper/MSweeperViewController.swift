@@ -50,7 +50,7 @@ class MSweeperViewController: UIViewController {
         if UIDevice.current.orientation.isValidInterfaceOrientation {
             //  Calculate col and row numbers for portrait/landscape
             calculateColRow()
-            gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: self.gameLevel)
+            gameEngine = MSweeperEngine(rowCount: numOfPortraitRows, colCount: numOfPortraitCols + 1, percentageOfBombs: Double(self.currentBombs)*0.01)
             (gameField, revealedGameField, gameBombsCount) = gameEngine?.startGame() as! (Array<Array<Int>>, Array<Array<Int>>, Int)
             prepareUI()
             flag = false
